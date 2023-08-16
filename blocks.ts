@@ -73,6 +73,18 @@ namespace effects {
         return new NumberRange(min, max)
     }
 
+    /**
+     * Create a range of percentages to randomly pick from
+     */
+    //% blockId="pctRangePicker"
+    //% blockHidden=true
+    //% block="between $min and $max \\%"
+    //% min.min=0 min.max=100 min.defl=50
+    //% max.min=0 max.max=100 max.defl=100
+    export function __createPercentageRange(min: number, max: number): NumberRange {
+        return new NumberRange(min, max)
+    }
+
     export class EffectData {
         constructor(
             public colorLUT: number[],
@@ -80,7 +92,15 @@ namespace effects {
             public spawn: NumberRange,
             public spread: NumberRange,
             public duration: NumberRange,
-        ) { }
+            public evx: number = 0,
+            public evy: number = 0,
+            public evMultiplyPct: NumberRange = null,
+            public deceleratePct: number = 50,
+        ) { 
+            if(!evMultiplyPct) {
+                this.evMultiplyPct = new NumberRange(0, 0)
+            }
+        }
     }
 
     /**
@@ -88,25 +108,42 @@ namespace effects {
      */
     //% group="Data"
     //% blockSetVariable=myEffect
-    //% block="custom effect set|colors to $colorLUT sizes to $sizeLUT initial spread $spawn over time spread $spread duration $duration"
+    //% block="custom effect set|colors to $colorLUT sizes to $sizeLUT initial spread $spawn over time spread $spread duration $duration|| add initial velocity|vx $vx vy $vy multiplied $velocityPct decelerate after duration $decelerateDuration"
     //% colorLUT.shadow="lists_create_with" colorLUT.defl="colorindexpicker"
     //% sizeLUT.shadow="presetSizeTablePicker"
     //% spawn.shadow="pixelRangePicker"
     //% spread.shadow="pixelRangePicker"
     //% duration.shadow="timeRangePicker"
+    //% expandableArgumentMode="toggle"
+    //% vx.min=-100 vx.max=100 vx.defl=0
+    //% vy.min=-100 vy.max=100 vy.defl=0
+    //% velocityPct.shadow="pctRangePicker"
+    //% decelerateDuration.shadow="timePicker" decelerateDuration.defl=200
     export function createCustomEffectData(
         colorLUT: number[],
         sizeLUT: number[],
         spawn: NumberRange,
         spread: NumberRange,
         duration: NumberRange,
+        vx: number = 0,
+        vy: number = 0,
+        velocityPct: NumberRange = null,
+        decelerateDuration: number = null,
     ): EffectData {
         return new EffectData(
             colorLUT,
             sizeLUT,
             spawn,
             spread,
-            duration
+            duration,
+            vx,
+            vy,
+            !!velocityPct
+                ? velocityPct
+                : new NumberRange(0, 0),
+            isNaN(decelerateDuration)
+                ? 50
+                : Math.floor(decelerateDuration / duration.max * 100)
         )
     }
 
@@ -232,7 +269,12 @@ namespace effects {
             effect.spawn.min,
             effect.spawn.max,
             effect.spread.min,
-            effect.spread.max
+            effect.spread.max,
+            effect.evx,
+            effect.evy,
+            effect.evMultiplyPct.min,
+            effect.evMultiplyPct.max,
+            effect.deceleratePct,
         )
         return anchor
     }
@@ -265,7 +307,12 @@ namespace effects {
             effect.spawn.min,
             effect.spawn.max,
             effect.spread.min,
-            effect.spread.max
+            effect.spread.max,
+            effect.evx,
+            effect.evy,
+            effect.evMultiplyPct.min,
+            effect.evMultiplyPct.max,
+            effect.deceleratePct,
         )
     }
 
@@ -299,7 +346,12 @@ namespace effects {
             effect.spawn.min,
             effect.spawn.max,
             effect.spread.min,
-            effect.spread.max
+            effect.spread.max,
+            effect.evx,
+            effect.evy,
+            effect.evMultiplyPct.min,
+            effect.evMultiplyPct.max,
+            effect.deceleratePct,
         )
     }
 

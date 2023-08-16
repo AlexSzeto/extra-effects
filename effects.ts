@@ -83,7 +83,13 @@ namespace effects {
             this.travelDistanceLUT = createNumberRangeLUT(minTravelDistance * 1000 / maxLifespan, maxTravelDistance * 1000 / maxLifespan)
             this.extraVx = Fx8(extraVx)
             this.extraVy = Fx8(extraVy)
+            console.log('xvx xvy mxpct')
+            console.log(extraVx)
+            console.log(extraVy)
+            console.log(minExtraVPctMultiplier)
+            console.log(maxExtraVPctMultiplier)
             this.extraVPctMultiplierLUT = createNumberRangeLUT(minExtraVPctMultiplier, maxExtraVPctMultiplier)
+            this.decelerateBreakpointPct = 100 - decelerateBreakpointPct
         }
 
         createParticle(anchor: particles.ParticleAnchor) {
