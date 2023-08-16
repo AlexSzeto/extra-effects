@@ -11,7 +11,7 @@ enum PresetShape {
     spark,
     explosion,
     cloud,
-    // twinkle,
+    twinkle,
 }
 
 /**
@@ -34,7 +34,7 @@ namespace effects {
         [6, 6, 4, 2, 1],
         [10, 16, 14, 12, 6, 4, 2, 1],
         [4, 16, 14, 12, 14, 16, 12, 8, 4],
-        // [1, 1, 2, 4, 2, 1, 1],
+        [1, 2, 4, 2, 2, 2, 1, 1, 1],
     ]
 
     export class NumberRange {
@@ -100,7 +100,7 @@ namespace effects {
         spawn: NumberRange,
         spread: NumberRange,
         duration: NumberRange,
-    ) {
+    ): EffectData {
         return new EffectData(
             colorLUT,
             sizeLUT,
@@ -122,7 +122,7 @@ namespace effects {
         color: PresetColor,
         shape: PresetShape,
         size: number = 50,
-    ) {
+    ): EffectData {
         return createPresetEffectData(
             createPresetColorTable(color),
             shape,
@@ -143,7 +143,7 @@ namespace effects {
         color: number,
         shape: PresetShape,
         size: number = 50,
-    ) {
+    ): EffectData  {
         return createPresetEffectData(
             createSingleColorTable(color),
             shape,
@@ -155,14 +155,14 @@ namespace effects {
         colorLUT: number[],
         shape: PresetShape,
         size: number = 50,
-    ) {
+    ): EffectData {
         const radius = Math.floor(size / 2)
         const pmax = radius * 0.75
         switch (shape) {
             case PresetShape.spark:
                 return new EffectData(
                     colorLUT,
-                    [6, 6, 4, 2, 1], // PRESET_SIZE_LUT[shape],
+                    PRESET_SIZE_LUT[shape],
                     new NumberRange(0, 0),
                     new NumberRange(12, Math.floor(radius * 1.5)),
                     new NumberRange(300, 400)
@@ -183,18 +183,18 @@ namespace effects {
                     new NumberRange(Math.floor(radius * 0.33), Math.floor(radius * 0.33)),
                     new NumberRange(800, 1200)
                 )
-            // case PresetShape.twinkle:
-            //     return new EffectData(
-            //         colorLUT,
-            //         PRESET_SIZE_LUT[shape],
-            //         new NumberRange(0, Math.floor(radius)),
-            //         new NumberRange(0, 0),
-            //         new NumberRange(300, 600)
-            //     )
+            case PresetShape.twinkle:
+                return new EffectData(
+                    colorLUT,
+                    PRESET_SIZE_LUT[shape],
+                    new NumberRange(0, Math.floor(radius)),
+                    new NumberRange(0, 0),
+                    new NumberRange(300, 600)
+                )
         }
     }
 
-    function calculateDensity(duration: number, density: number) {
+    function calculateDensity(duration: number, density: number): number {
         return duration < 800
             ? density / duration * 1000
             : density
@@ -287,7 +287,7 @@ namespace effects {
         effect: EffectData,
         duration: number,
         density: number = 20,
-    ) {
+    ): void {
         createCircularEffect(
             sprite,
             duration,
