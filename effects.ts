@@ -198,7 +198,7 @@ namespace effects {
             sourceLifespan = lifespan - maxPLifespan
             if (sourceLifespan < 100) {
                 sourceLifespan = 100
-                frequency = frequency * Math.min(lifespan, 1000) / 100
+                frequency = frequency * Math.min(lifespan, 1000) / 100 
             }
         }
 
