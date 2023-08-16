@@ -6,12 +6,19 @@ enum PresetColor {
     poison,
     smoke,
 }
+
 enum PresetShape {
     spark,
     explosion,
     cloud,
     // twinkle,
 }
+
+/**
+ * Provides a few extra effects based on particles exploding out of a center point
+ */
+//% color=0x82047e icon="\uf06d" advanced=true
+//% groups="['Colors', 'Sizes', 'Data', 'Create']"
 namespace effects {
 
     const PRESET_COLOR_LUT = [
@@ -246,9 +253,9 @@ namespace effects {
         duration: number,
         density: number = 20,
     ): void {
-        const anchor2 = { x: x, y: y }
+        const anchor = { x: x, y: y }
         createCircularEffect(
-            anchor2,
+            anchor,
             duration,
             effect.colorLUT,
             effect.sizeLUT,
@@ -350,10 +357,10 @@ namespace effects {
     //% block="array of numbers growing to $max"
     //% max.min=1 max.max=100 max.defl=16
     export function createGrowingSizes(max: number): number[] {
-        const result2 = []
-        for (let size2 = 1; size2 <= max; size2++) {
-            result2.push(size2)
+        const result = []
+        for (let size = 1; size <= max; size++) {
+            result.push(size)
         }
-        return result2
+        return result
     }
 }
