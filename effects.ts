@@ -9,7 +9,7 @@ namespace effects {
     const MAX_TWEEN_SLICES = 20
     const TWEEN_OUT_BREAKPOINT = 10
 
-    // const fxOneHundred = Fx8(100)
+    const fxOneHundred = Fx8(100)
     const galois = new Math.FastRandom()
 
     function initCache() {
@@ -50,9 +50,9 @@ namespace effects {
 
         private initSpreadLUT: Fx8[]
         private travelDistanceLUT: Fx8[]
-        // private extraVx: Fx8
-        // private extraVy: Fx8
-        // private extraVPctMultiplierLUT: Fx8[]
+        private extraVx: Fx8
+        private extraVy: Fx8
+        private extraVPctMultiplierLUT: Fx8[]
         private smallerCirclesLUT: Image[]
 
         constructor(
@@ -64,11 +64,11 @@ namespace effects {
             maxInitSpread: number,
             minTravelDistance: number,
             maxTravelDistance: number,
-            // extraVx: number,
-            // extraVy: number,
-            // minExtraVPctMultiplier: number,
-            // maxExtraVPctMultiplier: number,
-            // private enableDeceleration: boolean,
+            extraVx: number,
+            extraVy: number,
+            minExtraVPctMultiplier: number,
+            maxExtraVPctMultiplier: number,
+            private decelerateBreakpointPct: number,
         ) {
             super()
             initCache()
@@ -81,29 +81,28 @@ namespace effects {
             this.tweenOutSlice = this.maxLifespan / MAX_TWEEN_SLICES
             this.initSpreadLUT = createNumberRangeLUT(minInitSpread, maxInitSpread)
             this.travelDistanceLUT = createNumberRangeLUT(minTravelDistance * 1000 / maxLifespan, maxTravelDistance * 1000 / maxLifespan)
-            // this.extraVx = Fx8(extraVx)
-            // this.extraVy = Fx8(extraVy)
-            // this.extraVPctMultiplierLUT = createNumberRangeLUT(minExtraVPctMultiplier, maxExtraVPctMultiplier)
+            this.extraVx = Fx8(extraVx)
+            this.extraVy = Fx8(extraVy)
+            this.extraVPctMultiplierLUT = createNumberRangeLUT(minExtraVPctMultiplier, maxExtraVPctMultiplier)
         }
 
         createParticle(anchor: particles.ParticleAnchor) {
             const p: particles.Particle = super.createParticle(anchor);
 
             p.lifespan = galois.randomRange(this.minLifespan, this.maxLifespan - 1)
-            // p.data = this.enableDeceleration ? TWEEN_OUT_BREAKPOINT * this.tweenOutSlice : 0
-            p.data = TWEEN_OUT_BREAKPOINT * this.tweenOutSlice
+            p.data = (this.decelerateBreakpointPct * MAX_TWEEN_SLICES / 100) * this.tweenOutSlice
 
             const angle = galois.randomRange(0, NUM_SLICES - 1)
             const initSpreadMultiplier = galois.pickRandom(this.initSpreadLUT)
             const velocityMultiplier = galois.pickRandom(this.travelDistanceLUT)
-            // const extraVelocityPctMultiplier = galois.pickRandom(this.extraVPctMultiplierLUT)
+            const extraVelocityPctMultiplier = galois.pickRandom(this.extraVPctMultiplierLUT)
 
             p._x = Fx.add(p._x, Fx.mul(cachedCos[angle], initSpreadMultiplier))
             p._y = Fx.add(p._y, Fx.mul(cachedSin[angle], initSpreadMultiplier))
             p.vx = Fx.mul(cachedCos[angle], velocityMultiplier)
             p.vy = Fx.mul(cachedSin[angle], velocityMultiplier)
-            // p.vx = Fx.add(Fx.mul(cachedCos[angle], velocityMultiplier), Fx.div(Fx.mul(this.extraVx, extraVelocityPctMultiplier), fxOneHundred))
-            // p.vy = Fx.add(Fx.mul(cachedSin[angle], velocityMultiplier), Fx.div(Fx.mul(this.extraVy, extraVelocityPctMultiplier), fxOneHundred)) 
+            p.vx = Fx.add(Fx.mul(cachedCos[angle], velocityMultiplier), Fx.div(Fx.mul(this.extraVx, extraVelocityPctMultiplier), fxOneHundred))
+            p.vy = Fx.add(Fx.mul(cachedSin[angle], velocityMultiplier), Fx.div(Fx.mul(this.extraVy, extraVelocityPctMultiplier), fxOneHundred)) 
 
             return p;
         }
@@ -157,9 +156,9 @@ namespace effects {
     }
 
     /**
-     * Create a particle source for circular particles on a center spread trajectory
+     * Create a particle source for particles on a center spread trajectory
      */
-    export function createCircularEffect(
+    export function createSpreadEffectSource(
         anchor: particles.ParticleAnchor,
         lifespan: number,
         colorLUT: number[],
@@ -171,11 +170,11 @@ namespace effects {
         maxSpread: number,
         minTravel: number,
         maxTravel: number,
-        // extraVx: number = 0,
-        // extraVy: number = 0,
-        // minExtraVPctMultiplier: number = 100,
-        // maxExtraVPctMultiplier: number = 100,
-        // enableDeceleration: boolean = true,
+        extraVx: number = 0,
+        extraVy: number = 0,
+        minExtraVPctMultiplier: number = 100,
+        maxExtraVPctMultiplier: number = 100,
+        decelerateBreakpointPct: number = 50,
     ): particles.ParticleSource {
         const factory = new CircularParticleFactory(
             colorLUT,
@@ -186,11 +185,11 @@ namespace effects {
             maxSpread,
             minTravel,
             maxTravel,
-            // extraVx,
-            // extraVy,
-            // minExtraVPctMultiplier,
-            // maxExtraVPctMultiplier,
-            // enableDeceleration,
+            extraVx,
+            extraVy,
+            minExtraVPctMultiplier,
+            maxExtraVPctMultiplier,
+            decelerateBreakpointPct,
         );
 
         const src = new particles.ParticleSource(

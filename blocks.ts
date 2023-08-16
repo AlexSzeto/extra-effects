@@ -115,15 +115,15 @@ namespace effects {
      */
     //% group="Data"
     //% inlineInputMode=inline
-    //% blockId="createPresetColorEffectData"
+    //% blockId="createFullPresetsEffectData"
     //% block="preset effect $color $shape|| $size px wide"
     //% size.min=20 size.max=100 size.defl=50
-    export function createPresetColorEffectData(
+    export function createFullPresetsEffectData(
         color: PresetColor,
         shape: PresetShape,
         size: number = 50,
     ): EffectData {
-        return createPresetEffectData(
+        return __createPresetEffectData(
             createPresetColorTable(color),
             shape,
             size,
@@ -144,14 +144,14 @@ namespace effects {
         shape: PresetShape,
         size: number = 50,
     ): EffectData  {
-        return createPresetEffectData(
+        return __createPresetEffectData(
             createSingleColorTable(color),
             shape,
             size,
         )
     }
 
-    export function createPresetEffectData(
+    function __createPresetEffectData(
         colorLUT: number[],
         shape: PresetShape,
         size: number = 50,
@@ -221,7 +221,7 @@ namespace effects {
         density: number = 20,
     ): particles.ParticleAnchor {
         const anchor = { x: x, y: y }
-        createCircularEffect(
+        createSpreadEffectSource(
             anchor,
             duration,
             effect.colorLUT,
@@ -254,7 +254,7 @@ namespace effects {
         density: number = 20,
     ): void {
         const anchor = { x: x, y: y }
-        createCircularEffect(
+        createSpreadEffectSource(
             anchor,
             duration,
             effect.colorLUT,
@@ -288,7 +288,7 @@ namespace effects {
         duration: number,
         density: number = 20,
     ): void {
-        createCircularEffect(
+        createSpreadEffectSource(
             sprite,
             duration,
             effect.colorLUT,
