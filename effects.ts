@@ -195,10 +195,12 @@ namespace effects {
 
         let sourceLifespan = lifespan
         if (lifespan !== undefined) {
-            sourceLifespan = lifespan - maxPLifespan
-            if (sourceLifespan < 100) {
-                sourceLifespan = 100
-                frequency = frequency * Math.min(lifespan, 1000) / 100 
+            sourceLifespan -= maxPLifespan            
+            if (sourceLifespan < 200) {
+                sourceLifespan = 200
+            }
+            if (sourceLifespan < 1000) {
+                frequency *= 1000 / sourceLifespan * 0.5
             }
         }
 

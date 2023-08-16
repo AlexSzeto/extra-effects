@@ -4,7 +4,7 @@
 // for (let i = 2; i < 50; i++) {
 //     let myEffect = 0
 //     effects.__startExplosiveEffectAtPosition(effects.createFullPresetsEffectData(PresetColor.fire, PresetShape.cloud), 
-//     75, 55, i * 200)
+//     75, 55, i * 200, 20)
 
 //     pause(i * 200 + 1500)
 //     info.changeScoreBy(2)
