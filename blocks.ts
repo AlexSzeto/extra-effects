@@ -360,7 +360,7 @@ namespace effects {
      */
     //% group="Colors" color=0xff9008
     //% blockId="presetColorTablePicker"
-    //% block="array of only $color"
+    //% block="array of $color colors"
     export function createPresetColorTable(color: PresetColor): number[] {
         return PRESET_COLOR_LUT[color]
     }
@@ -370,7 +370,7 @@ namespace effects {
      */
     //% group="Colors" color=0xff9008
     //% blockId="singleColorTablePicker"
-    //% block="array of $color color"
+    //% block="array of only $color color"
     //% color.shadow="colorindexpicker" color.defl=5
     export function createSingleColorTable(color: number): number[] {
         return [color]
