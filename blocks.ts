@@ -231,12 +231,6 @@ namespace effects {
         }
     }
 
-    function calculateDensity(duration: number, density: number): number {
-        return duration < 800
-            ? density / duration * 1000
-            : density
-    }
-
     /**
      * Start an explosive effect at a position on the stage
      */
@@ -263,7 +257,7 @@ namespace effects {
             duration,
             effect.colorLUT,
             effect.sizeLUT,
-            calculateDensity(duration, density),
+            density,
             effect.duration.min,
             effect.duration.max,
             effect.spawn.min,
@@ -301,7 +295,7 @@ namespace effects {
             duration,
             effect.colorLUT,
             effect.sizeLUT,
-            calculateDensity(duration, density),
+            density,
             effect.duration.min,
             effect.duration.max,
             effect.spawn.min,
@@ -340,7 +334,7 @@ namespace effects {
             duration,
             effect.colorLUT,
             effect.sizeLUT,
-            calculateDensity(duration, density),
+            density,
             effect.duration.min,
             effect.duration.max,
             effect.spawn.min,

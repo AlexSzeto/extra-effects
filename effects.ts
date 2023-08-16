@@ -193,13 +193,25 @@ namespace effects {
             decelerateBreakpointPct,
         );
 
+        let sourceLifespan = lifespan
+        if (lifespan !== undefined) {
+            sourceLifespan = lifespan - maxPLifespan
+            if (sourceLifespan < 100) {
+                sourceLifespan = 100
+                frequency = frequency * Math.min(lifespan, 1000) / 100
+            }
+        }
+
         const src = new particles.ParticleSource(
             anchor,
             frequency,
             factory
         )
 
-        src.lifespan = Math.max(50, lifespan - maxPLifespan)
+        if (sourceLifespan !== undefined) {
+            src.lifespan = sourceLifespan
+        }
+
         return src
     }
 }
