@@ -1,30 +1,18 @@
 // tests go here; this will not be compiled when this package is used as an extension.
+let sfx = extraEffects.createFullPresetsEffectData(
+    ExtraEffectPresetColor.Fire,
+    ExtraEffectPresetShape.Explosion
+)
 
-// info.changeScoreBy(2)
-// for (let i = 2; i < 50; i++) {
-//     let myEffect = 0
-//     effects.__startExplosiveEffectAtPosition(effects.createFullPresetsEffectData(PresetColor.fire, PresetShape.cloud), 
-//     75, 55, i * 200, 20)
-
-//     pause(i * 200 + 1500)
-//     info.changeScoreBy(2)
-// }
-
-// const sfx = effects.createSpreadEffectSource(
-//     { x: 75, y: 55 },
-//     1000,
-//     [4],
-//     [2],
-//     50,
-//     300,
-//     300,
-//     0,
-//     24,
-//     0,
-//     0,
-//     24,
-//     24,
-//     100,
-//     100,
-//     50,
-// )
+for (let i = 1; i < 10; i++) {
+    let lifespan = i * 200
+    info.setScore(lifespan)
+    extraEffects.createSpreadEffectAt(
+        scene.screenWidth() / 2,
+        scene.screenHeight() / 2,
+        sfx,
+        20,
+        lifespan
+    )    
+    pause(lifespan + 1000)
+}
