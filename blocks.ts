@@ -27,7 +27,7 @@ enum ExtraEffectPresetShape {
 /**
  * Provides extra effects based on particles spreading out of a center point
  */
-//% color=0x82047e icon="\uf06d" block="Effects" advanced=true
+//% color="#82047e" icon="\uf06d" block="Effects" advanced=true
 //% groups="['Colors', 'Sizes', 'Data', 'Create']"
 namespace extraEffects {
 
@@ -124,8 +124,8 @@ namespace extraEffects {
 
     /**
      * Create a custom EffectData object by feeding it a full set of parameters
-    * @param colorLookupTable a lookup table of color index values used to color the particles over time
-    * @param sizeLookupTable a lookup table of particle radius used to size the particles over time
+     * @param colorLookupTable a lookup table of color index values used to color the particles over time
+     * @param sizeLookupTable a lookup table of particle radius used to size the particles over time
      * @param spawnSpread range of random spawn distance away from center
      * @param lifespanSpread range of random distance traveled over the particle lifespan
      * @param lifespan range of random particle lifespan
@@ -278,7 +278,7 @@ namespace extraEffects {
      * @returns the anchor of the generated particle source
      */
     //% inlineInputMode=inline
-    //% group="Create" color=0x4b7bec
+    //% group="Create" color="#4b7bec"
     //% blockId="createSpreadEffectAt"
     //% blockSetVariable=myAnchor
     //% block="start $effectData at x $x y $y for $lifespan ms|| density $particlesPerSecond"
@@ -317,7 +317,7 @@ namespace extraEffects {
     }
 
     //% inlineInputMode=inline
-    //% group="Create" color=0x4b7bec
+    //% group="Create" color="#4b7bec"
     //% block="start $effectData at x $x y $y for $lifespan ms|| density $particlesPerSecond"
     //% blockAliasFor="extraEffects.createSpreadEffectAt"
     //% effectData.shadow=variables_get effectData.defl=myEffect
@@ -361,7 +361,7 @@ namespace extraEffects {
      * @param lifespan full duration of the effect
      */
     //% inlineInputMode=inline
-    //% group="Create" color=0x4b7bec
+    //% group="Create" color="#4b7bec"
     //% blockId="createSpreadEffectOnAnchor"
     //% block="$sprite start $effectData for $lifespan ms|| density $particlesPerSecond"
     //% sprite.shadow=variables_get sprite.defl=mySprite
@@ -401,7 +401,7 @@ namespace extraEffects {
      * @param color 
      * @returns 
      */
-    //% group="Colors" color=0xff9008
+    //% group="Colors" color="#ff9008"
     //% blockId="presetColorTablePicker"
     //% block="array of $color colors"
     export function createPresetColorTable(color: ExtraEffectPresetColor): number[] {
@@ -413,7 +413,7 @@ namespace extraEffects {
      * @param color
      * @returns 
      */
-    //% group="Colors" color=0xff9008
+    //% group="Colors" color="#ff9008"
     //% blockId="singleColorTablePicker"
     //% block="array of only $color color"
     //% color.shadow="colorindexpicker" color.defl=5
@@ -426,7 +426,7 @@ namespace extraEffects {
      * @param shape 
      * @returns 
      */
-    //% group="Sizes" color=0xff9008
+    //% group="Sizes" color="#ff9008"
     //% blockId="presetSizeTablePicker"
     //% block="sizes matching shape $shape"
     export function createPresetSizeTable(shape: ExtraEffectPresetShape): number[] {
@@ -438,7 +438,7 @@ namespace extraEffects {
      * @param max 
      * @returns 
      */
-    //% group="Sizes" color=0xff9008
+    //% group="Sizes" color="#ff9008"
     //% blockId="shrinkingTablePicker"
     //% block="array of numbers shrinking from $max"
     //% max.min=1 max.max=100 max.defl=16
@@ -455,7 +455,7 @@ namespace extraEffects {
      * @param max 
      * @returns 
      */
-    //% group="Sizes" color=0xff9008
+    //% group="Sizes" color="#ff9008"
     //% blockId="growingTablePicker"
     //% block="array of numbers growing to $max"
     //% max.min=1 max.max=100 max.defl=16
