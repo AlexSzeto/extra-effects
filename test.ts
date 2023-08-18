@@ -1,5 +1,5 @@
 // tests go here; this will not be compiled when this package is used as an extension.
-let sfx = extraEffects.createFullPresetsEffectData(
+let sfx = extraEffects.createFullPresetsSpreadEffectData(
     ExtraEffectPresetColor.Fire,
     ExtraEffectPresetShape.Explosion
 )
@@ -12,6 +12,7 @@ for (let i = 1; i < 10; i++) {
         scene.screenHeight() / 2,
         sfx,
         20,
+        48,
         lifespan
     )    
     pause(lifespan + 1000)

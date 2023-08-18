@@ -50,20 +50,27 @@ namespace extraEffects {
     export class NumberRange {
         constructor(
             public min: number,
-            public max: number
+            public max: number,
+            public minScale: number = 1.0,
+            public maxScale: number = 1.0,
         ) {
             if (min > max) {
                 this.min = max
                 this.max = min
             }
         }
+
+        resizedMin(size: number): number {
+            return Math.max(this.min, this.minScale * size)            
+        }
+
+        resizedMax(size: number): number {
+            return Math.max(this.max, this.maxScale * size)
+        }
     }
 
     /**
      * Factory function for creating a time based number range
-     * @param min 
-     * @param max 
-     * @returns 
      */
     //% blockId="timeRangePicker"
     //% blockHidden=true
@@ -76,9 +83,6 @@ namespace extraEffects {
 
     /**
      * Factory fuction for creating a pixel based number range
-     * @param min 
-     * @param max 
-     * @returns 
      */
     //% blockId="pixelRangePicker"
     //% blockHidden=true
@@ -91,9 +95,6 @@ namespace extraEffects {
     
     /**
      * Factory function for creating a percentage based number range
-     * @param min 
-     * @param max 
-     * @returns 
      */
     //% blockId="percentRangePicker"
     //% blockHidden=true
@@ -104,7 +105,10 @@ namespace extraEffects {
         return new NumberRange(min, max)
     }
 
-    export class EffectData {
+    /**
+     * A reusable group of settings used to create a specific style of spread effect. The size and duration of the effect can be adjusted as they are being created.
+     */
+    export class SpreadEffectData {
         constructor(
             public colorLookupTable: number[],
             public sizeLookupTable: number[],
@@ -115,6 +119,7 @@ namespace extraEffects {
             public extraVY: number = 0,
             public extraVelocityMultiplierPercentage: NumberRange = null,
             public tweenOutAfterLifespanPastPercentage: number = 50,
+            public allowParticleResizing: boolean = false,
         ) { 
             if(!extraVelocityMultiplierPercentage) {
                 this.extraVelocityMultiplierPercentage = new NumberRange(0, 0)
@@ -123,7 +128,7 @@ namespace extraEffects {
     }
 
     /**
-     * Create a custom EffectData object by feeding it a full set of parameters
+     * Create a custom SpreadEffectData object from scratch. Read the description of each parameter or just play around with the settings to create a wide variety of unique effects.
      * @param colorLookupTable a lookup table of color index values used to color the particles over time
      * @param sizeLookupTable a lookup table of particle radius used to size the particles over time
      * @param spawnSpread range of random spawn distance away from center
@@ -148,7 +153,7 @@ namespace extraEffects {
     //% vy.min=-100 vy.max=100 vy.defl=0
     //% velocityPercentageMultiplier.shadow="percentRangePicker"
     //% tweenOutLifespanBreakpoint.shadow="timePicker" tweenOutLifespanBreakpoint.defl=200
-    export function createCustomEffectData(
+    export function createCustomSpreadEffectData(
         colorLookupTable: number[],
         sizeLookupTable: number[],
         spawnSpread: NumberRange,
@@ -158,8 +163,8 @@ namespace extraEffects {
         vy: number = 0,
         velocityPercentageMultiplier: NumberRange = null,
         tweenOutLifespanBreakpoint: number = null,
-    ): EffectData {
-        return new EffectData(
+    ): SpreadEffectData {
+        return new SpreadEffectData(
             colorLookupTable,
             sizeLookupTable,
             spawnSpread,
@@ -177,112 +182,108 @@ namespace extraEffects {
     }
 
     /**
-     * Create an EffectData object using only preset values
-     * @param color preset color table with a gradient of colors
+     * Create a SpreadEffectData object using a combination of predefined settings
+     * @param color preset color value that mimics various materials
      * @param shape preset shape value to change overall size and spread
      * @param diameter diameter of the effect area
      * @returns 
      */
     //% group="Data"
     //% inlineInputMode=inline
-    //% blockId="createFullPresetsEffectData"
-    //% block="preset effect $color $shape|| diameter $diameter"
-    //% diameter.min=20 diameter.max=100 diameter.defl=50
-    export function createFullPresetsEffectData(
+    //% blockId="createFullPresetsSpreadEffectData"
+    //% block="preset effect $color $shape"
+    export function createFullPresetsSpreadEffectData(
         color: ExtraEffectPresetColor,
         shape: ExtraEffectPresetShape,
-        diameter: number = 50,
-    ): EffectData {
-        return __createShapePresetEffectData(
+    ): SpreadEffectData {
+        return __createShapePresetSpreadEffectData(
             createPresetColorTable(color),
             shape,
-            diameter,
         )
     }
 
     /**
-     * Create an EffectData object with a single color and preset shape
-     * @param color color index for all particles
+     * Create a SpreadEffectData object with a predefined shape, but just a single color
+     * @param color a color palette index used for all particles
      * @param shape preset shape value to change overall size and spread
-     * @param diameter diameter of the effect area
      * @returns 
      */
     //% group="Data"
     //% inlineInputMode=inline
-    //% blockId="createSingleColorEffectData"
-    //% block="preset effect $color $shape|| diameter $diameter"
+    //% blockId="createSingleColorSpreadEffectData"
+    //% block="single color effect $color $shape"
     //% color.shadow="colorindexpicker" color.defl=5
-    //% diameter.min=20 diameter.max=100 diameter.defl=50
-    export function createSingleColorEffectData(
+    export function createSingleColorSpreadEffectData(
         color: number,
         shape: ExtraEffectPresetShape,
-        size: number = 50,
-    ): EffectData  {
-        return __createShapePresetEffectData(
-            createSingleColorTable(color),
+    ): SpreadEffectData  {
+        return __createShapePresetSpreadEffectData(
+            [color],
             shape,
-            size,
         )
     }
 
-    function __createShapePresetEffectData(
+    function __createShapePresetSpreadEffectData(
         colorLookupTable: number[],
         shape: ExtraEffectPresetShape,
-        size: number = 50,
-    ): EffectData {
-        const radius = Math.floor(size / 2)
-        const pmax = radius * 0.75
+    ): SpreadEffectData {
+        const sizeLookupTable = PRESET_SIZE_LUT[shape]
         switch (shape) {
             case ExtraEffectPresetShape.Spark:
-                return new EffectData(
+                return new SpreadEffectData(
                     colorLookupTable,
-                    PRESET_SIZE_LUT[shape],
+                    sizeLookupTable,
                     new NumberRange(0, 0),
-                    new NumberRange(12, Math.floor(radius * 1.5)),
+                    new NumberRange(12, 24, 0, 1.0),
                     new NumberRange(300, 400)
                 )
             case ExtraEffectPresetShape.Explosion:
-                return new EffectData(
+                return new SpreadEffectData(
                     colorLookupTable,
-                    [10, Math.max(16, Math.floor(pmax)), Math.max(14, Math.floor(pmax * 0.5)), 12, 6, 4, 2, 1],
-                    new NumberRange(0, Math.floor(radius * 0.50)),
-                    new NumberRange(Math.floor(radius * 0.50), Math.floor(radius * 0.75)),
+                    sizeLookupTable,
+                    new NumberRange(0, 24, 0, 0.5),
+                    new NumberRange(12, 18, 0.5, 0.75),
                     new NumberRange(400, 600)
                 )
             case ExtraEffectPresetShape.Cloud:
-                return new EffectData(
+                return new SpreadEffectData(
                     colorLookupTable,
-                    [4, Math.max(16, Math.floor(pmax)), Math.max(14, Math.floor(pmax * 0.75)), Math.max(12, Math.floor(pmax * 0.5)), 14, 16, 12, 8, 4],
-                    new NumberRange(0, Math.floor(radius * 0.50)),
-                    new NumberRange(Math.floor(radius * 0.33), Math.floor(radius * 0.33)),
+                    sizeLookupTable,
+                    new NumberRange(0, 24, 0, 0.66),
+                    new NumberRange(16, 16, 0.33, 0.33),
                     new NumberRange(800, 1200)
                 )
             case ExtraEffectPresetShape.Twinkle:
-                return new EffectData(
+                return new SpreadEffectData(
                     colorLookupTable,
-                    PRESET_SIZE_LUT[shape],
-                    new NumberRange(0, Math.floor(radius)),
+                    sizeLookupTable,
+                    new NumberRange(0, 0, 0, 1.0),
                     new NumberRange(0, 0),
                     new NumberRange(300, 600)
                 )
         }
     }
 
+    function resizeTable(table: number[], newMax: number): number[] {
+        const tableMax = table.reduce((max, curr) => curr > max ? curr : max, 1)
+        const rescaleFactor = newMax / tableMax
+        return table.map(value => value >= 1 ? Math.max(1, Math.floor(value * rescaleFactor)) : 0)
+    }
+
     /**
-     * Create a spread effect at the screen coordinates
+     * Create a spread effect at a set of coordinates. This is a fire and forget effect, so if the effect needs to be manipulated at any point, attach it to a Sprite instead.
      * @param x center x of the effect
      * @param y center y of the effect
      * @param effectData data used to setup the effect particles
+     * @param diameter the maximum spread of the effect from edge to edge
      * @param particlesPerSecond frequency for generating particles
      * @param lifespan full duration of the effect
-     * @returns the anchor of the generated particle source
      */
     //% inlineInputMode=inline
-    //% group="Create" color="#4b7bec"
-    //% blockId="createSpreadEffectAt"
-    //% blockSetVariable=myAnchor
-    //% block="start $effectData at x $x y $y for $lifespan ms|| density $particlesPerSecond"
+    //% group="Create"
+    //% block="start $effectData at x $x y $y|| with diameter $diameter|| density $particlesPerSecond|| for $lifespan ms"
     //% effectData.shadow=variables_get effectData.defl=myEffect
+    //% diameter.min=20 diameter.max=100 diameter.defl=48
     //% x.shadow="positionPicker" x.defl=75
     //% y.shadow="positionPicker" y.defl=55
     //% lifespan.shadow="timePicker" lifespan.defl=100
@@ -290,104 +291,54 @@ namespace extraEffects {
     export function createSpreadEffectAt(
         x: number,
         y: number,
-        effectData: EffectData,
-        particlesPerSecond: number = 20,
-        lifespan?: number,
-    ): particles.ParticleAnchor {
-        const anchor = { x: x, y: y }
-        createSpreadParticleSource(
-            anchor,
-            effectData.colorLookupTable,
-            effectData.sizeLookupTable,
-            particlesPerSecond,
-            lifespan,
-            effectData.lifespan.min,
-            effectData.lifespan.max,
-            effectData.spawnSpread.min,
-            effectData.spawnSpread.max,
-            effectData.lifespanSpread.min,
-            effectData.lifespanSpread.max,
-            effectData.extraVX,
-            effectData.extraVY,
-            effectData.extraVelocityMultiplierPercentage.min,
-            effectData.extraVelocityMultiplierPercentage.max,
-            effectData.tweenOutAfterLifespanPastPercentage,
-        )
-        return anchor
-    }
-
-    //% inlineInputMode=inline
-    //% group="Create" color="#4b7bec"
-    //% block="start $effectData at x $x y $y for $lifespan ms|| density $particlesPerSecond"
-    //% blockAliasFor="extraEffects.createSpreadEffectAt"
-    //% effectData.shadow=variables_get effectData.defl=myEffect
-    //% x.shadow="positionPicker" x.defl=75
-    //% y.shadow="positionPicker" y.defl=55
-    //% lifespan.shadow="timePicker" lifespan.defl=100
-    //% particlesPerSecond.min=10 particlesPerSecond.max=50 particlesPerSecond.defl=20
-    export function __createSpreadEffectAt(
-        x: number,
-        y: number,
-        effectData: EffectData,
+        effectData: SpreadEffectData,
+        diameter: number = 48,
         particlesPerSecond: number = 20,
         lifespan?: number,
     ): void {
-        const anchor = { x: x, y: y }
-        createSpreadParticleSource(
-            anchor,
-            effectData.colorLookupTable,
-            effectData.sizeLookupTable,
-            particlesPerSecond,
-            lifespan,
-            effectData.lifespan.min,
-            effectData.lifespan.max,
-            effectData.spawnSpread.min,
-            effectData.spawnSpread.max,
-            effectData.lifespanSpread.min,
-            effectData.lifespanSpread.max,
-            effectData.extraVX,
-            effectData.extraVY,
-            effectData.extraVelocityMultiplierPercentage.min,
-            effectData.extraVelocityMultiplierPercentage.max,
-            effectData.tweenOutAfterLifespanPastPercentage,
-        )
+        this.createSpreadParticleOnAnchor({ x: x, y: y })
     }
 
     /**
      * Create a spread effect on a Sprite or other valid anchor objects
      * @param anchor a valid anchor object for the generated effect
      * @param effectData data used to setup the effect particles
+     * @param diameter the maximum spread of the effect from edge to edge
      * @param particlesPerSecond frequency for generating particles
      * @param lifespan full duration of the effect
      */
     //% inlineInputMode=inline
-    //% group="Create" color="#4b7bec"
+    //% group="Create"
     //% blockId="createSpreadEffectOnAnchor"
-    //% block="$sprite start $effectData for $lifespan ms|| density $particlesPerSecond"
+    //% block="$sprite start $effectData|| with diameter $diameter|| density $particlesPerSecond|| for $lifespan ms"
     //% sprite.shadow=variables_get sprite.defl=mySprite
     //% effectData.shadow=variables_get effectData.defl=myEffect
+    //% diameter.min=20 diameter.max=100 diameter.defl=48
     //% x.shadow="positionPicker" x.defl=75
     //% y.shadow="positionPicker" y.defl=55
     //% lifespan.shadow="timePicker" lifespan.defl=100
     //% particlesPerSecond.min=10 particlesPerSecond.max=50 particlesPerSecond.defl=20
     export function createSpreadEffectOnAnchor(
         anchor: particles.ParticleAnchor,
-        effectData: EffectData,
+        effectData: SpreadEffectData,
+        diameter: number = 48,
         particlesPerSecond: number = 20,
         lifespan?: number,
     ): void {
         createSpreadParticleSource(
             anchor,
             effectData.colorLookupTable,
-            effectData.sizeLookupTable,
+            effectData.allowParticleResizing
+                ? resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2))
+                : effectData.sizeLookupTable,
             particlesPerSecond,
             lifespan,
-            effectData.lifespan.min,
-            effectData.lifespan.max,
-            effectData.spawnSpread.min,
-            effectData.spawnSpread.max,
-            effectData.lifespanSpread.min,
-            effectData.lifespanSpread.max,
+            effectData.lifespan.resizedMin(diameter),
+            effectData.lifespan.resizedMax(diameter),
+            effectData.spawnSpread.resizedMin(diameter),
+            effectData.spawnSpread.resizedMax(diameter),
+            effectData.lifespanSpread.resizedMin(diameter),
+            effectData.lifespanSpread.resizedMax(diameter),
             effectData.extraVX,
             effectData.extraVY,
             effectData.extraVelocityMultiplierPercentage.min,
@@ -399,7 +350,6 @@ namespace extraEffects {
     /**
      * Create a color table based on a preset color set
      * @param color 
-     * @returns 
      */
     //% group="Colors" color="#ff9008"
     //% blockId="presetColorTablePicker"
@@ -409,22 +359,8 @@ namespace extraEffects {
     }
 
     /**
-     * Create a color table with a single color index
-     * @param color
-     * @returns 
-     */
-    //% group="Colors" color="#ff9008"
-    //% blockId="singleColorTablePicker"
-    //% block="array of only $color color"
-    //% color.shadow="colorindexpicker" color.defl=5
-    export function createSingleColorTable(color: number): number[] {
-        return [color]
-    }
-
-    /**
      * Create the base particle sizes used by a preset shape
      * @param shape 
-     * @returns 
      */
     //% group="Sizes" color="#ff9008"
     //% blockId="presetSizeTablePicker"
@@ -436,7 +372,6 @@ namespace extraEffects {
     /**
      * Create a number array that counts from the specified value down to 1
      * @param max 
-     * @returns 
      */
     //% group="Sizes" color="#ff9008"
     //% blockId="shrinkingTablePicker"
@@ -453,7 +388,6 @@ namespace extraEffects {
     /**
      * Create a number array that counts from 1 up to the specified value
      * @param max 
-     * @returns 
      */
     //% group="Sizes" color="#ff9008"
     //% blockId="growingTablePicker"
