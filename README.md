@@ -1,7 +1,20 @@
- 
+## Quick Start
 
+- start an effect with either of the create effect blocks in the `Create` section.
+- try replacing the effect data shadow block with the fire spark block from the `Data` section. Try using other word combinations!
+- for full customization, create an effect data object from scratch using the gigantc custom effect data block!
 
-> Open this page at [https://alexszeto.github.io/extra-effects/](https://alexszeto.github.io/extra-effects/)
+## Tips and Tricks
+
+- to create infinite effects, set the effect duration to a negative number.
+- the two big settings for custom effect datas are the colors and sizes:
+    - Both colors and sizes are number arrays. Any number array can be used, although putting random numbers into the color array is usually not very helpful.    
+    - If there's already a good preset for color or size that you want to reuse, there are blocks to put those presets back into the custom effect data.
+    - Over the lifetime of each particle it would cycle through each of the colors and sizes in the array from start to finish.
+- The set/change blocks under the `Advanced Data` section can be used to tweak the preset effect data objects - just assign a preset object to a variable first.
+- set a negative extra vy to make particles float, or add gravity to give particles weight.
+- the wave radius setting usually requires extra vy or gravity to achieve its looks, but feel free to experiment!
+- if in doubt, try it out! You can always change it back.
 
 ## Use as Extension
 
@@ -12,22 +25,6 @@ This repository can be added as an **extension** in MakeCode.
 * click on **Extensions** under the gearwheel menu
 * search for **https://github.com/alexszeto/extra-effects** and import
 
-## Edit this project ![Build status badge](https://github.com/alexszeto/extra-effects/workflows/MakeCode/badge.svg)
-
-To edit this repository in MakeCode.
-
-* open [https://arcade.makecode.com/](https://arcade.makecode.com/)
-* click on **Import** then click on **Import URL**
-* paste **https://github.com/alexszeto/extra-effects** and click import
-
-## Blocks preview
-
-This image shows the blocks code from the last commit in master.
-This image may take a few minutes to refresh.
-
-![A rendered view of the blocks](https://github.com/alexszeto/extra-effects/raw/master/.github/makecode/blocks.png)
-
 #### Metadata (used for search, rendering)
 
 * for PXT/arcade
-<script src="https://makecode.com/gh-pages-embed.js"></script><script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
