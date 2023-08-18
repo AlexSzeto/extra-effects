@@ -230,7 +230,7 @@ namespace extraEffects {
         );
 
         let sourceLifespan = totalLifespan
-        if (sourceLifespan > 0) {
+        if (sourceLifespan >= 0) {
             sourceLifespan = Math.max(200, sourceLifespan - maxParticleLifespan)
             if (sourceLifespan < 1000) {
                 particlesPerSecond *= 500 / sourceLifespan
@@ -243,7 +243,7 @@ namespace extraEffects {
             factory
         )
 
-        if (sourceLifespan > 0) {
+        if (sourceLifespan >= 0) {
             src.lifespan = sourceLifespan
         }
 

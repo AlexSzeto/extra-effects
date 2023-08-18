@@ -287,31 +287,31 @@ namespace extraEffects {
      * @param effectData data used to setup the effect particles
      * @param diameter the maximum spread of the effect from edge to edge
      * @param particlesPerSecond frequency for generating particles
-     * @param lifespan full duration of the effect
+     * @param lifespan full duration of the effect, set to -1 for infinite duration
      */
     //% inlineInputMode=inline
     //% group="Create"
     //% block="start $effectData at x $x y $y for $lifespan ms|| with diameter $diameter density $particlesPerSecond"
+    //% effectData.shadow=variables_get effectData.defl=myEffect
     //% x.shadow="positionPicker" x.defl=75
     //% y.shadow="positionPicker" y.defl=55
-    //% effectData.shadow=variables_get effectData.defl=myEffect
+    //% lifespan.shadow="timePicker" lifespan.defl=100
     //% diameter.min=20 diameter.max=100 diameter.defl=48
     //% particlesPerSecond.min=10 particlesPerSecond.max=50 particlesPerSecond.defl=20
-    //% lifespan.shadow="timePicker" lifespan.defl=100
     export function createSpreadEffectAt(
+        effectData: SpreadEffectData,
         x: number,
         y: number,
-        effectData: SpreadEffectData,
+        lifespan: number = 100,
         diameter: number = 48,
         particlesPerSecond: number = 20,
-        lifespan: number = 0,
     ): void {
         createSpreadEffectOnAnchor(
             { x: x, y: y },
             effectData,
+            lifespan,
             diameter,
             particlesPerSecond,
-            lifespan,
         )
     }
 
@@ -321,7 +321,7 @@ namespace extraEffects {
      * @param effectData data used to setup the effect particles
      * @param diameter the maximum spread of the effect from edge to edge
      * @param particlesPerSecond frequency for generating particles
-     * @param lifespan full duration of the effect
+     * @param lifespan full duration of the effect, set to -1 for infinite duration
      */
     //% inlineInputMode=inline
     //% group="Create"
@@ -335,9 +335,9 @@ namespace extraEffects {
     export function createSpreadEffectOnAnchor(
         anchor: particles.ParticleAnchor,
         effectData: SpreadEffectData,
+        lifespan: number = 100,
         diameter: number = 48,
         particlesPerSecond: number = 20,
-        lifespan: number = 0,
     ): void {
         createSpreadParticleSource(
             anchor,

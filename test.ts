@@ -17,17 +17,18 @@ for (let color = 0; color < 6; color++) {
             extraEffects.createSpreadEffectOnAnchor(
                 calibrationCenter,
                 calibrationEffect,
+                -1,
                 diameter * 24,
                 300,
             )
             for (let density = 0; density < 2; density++) {
                 extraEffects.createSpreadEffectAt(
+                    sfx,
                     scene.screenWidth() / 2,
                     scene.screenHeight() / 2,
-                    sfx,
+                    200,
                     diameter * 24,
                     20 + density * 40,
-                    200
                 )
                 pause(1400)
             }
