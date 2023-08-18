@@ -51,8 +51,8 @@ namespace extraEffects {
         constructor(
             public min: number,
             public max: number,
-            public minScale: number = 0,
-            public maxScale: number = 0,
+            public minScale: number = 1.0,
+            public maxScale: number = 1.0,
         ) {
             if (min > max) {
                 this.min = max
@@ -115,11 +115,11 @@ namespace extraEffects {
             public spawnSpread: NumberRange,
             public lifespanSpread: NumberRange,
             public lifespan: NumberRange,
-            public sizeScale: number = 0,
             public extraVX: number = 0,
             public extraVY: number = 0,
             public extraVelocityMultiplierPercentage: NumberRange = null,
             public tweenOutAfterLifespanPastPercentage: number = 50,
+            public allowParticleResizing: boolean = false,
         ) { 
             if(!extraVelocityMultiplierPercentage) {
                 this.extraVelocityMultiplierPercentage = new NumberRange(0, 0)
@@ -170,7 +170,6 @@ namespace extraEffects {
             spawnSpread,
             lifespanSpread,
             lifespan,
-            0,
             vx,
             vy,
             !!velocityPercentageMultiplier
@@ -235,26 +234,24 @@ namespace extraEffects {
                     colorLookupTable,
                     sizeLookupTable,
                     new NumberRange(0, 0),
-                    new NumberRange(3, 6, 0, 2.0),
-                    new NumberRange(300, 400),
+                    new NumberRange(12, 24, 0, 1.0),
+                    new NumberRange(300, 400)
                 )
             case ExtraEffectPresetShape.Explosion:
                 return new SpreadEffectData(
                     colorLookupTable,
                     sizeLookupTable,
-                    new NumberRange(0, 6, 0, 0.33),
-                    new NumberRange(3, 6, 0.50, 0.75),
-                    new NumberRange(400, 600),
-                    0.66
+                    new NumberRange(0, 24, 0, 0.5),
+                    new NumberRange(12, 18, 0.5, 0.75),
+                    new NumberRange(400, 600)
                 )
             case ExtraEffectPresetShape.Cloud:
                 return new SpreadEffectData(
                     colorLookupTable,
                     sizeLookupTable,
-                    new NumberRange(0, 6, 0, 0.66),
-                    new NumberRange(4, 4, 0.33, 0.33),
-                    new NumberRange(800, 1200),
-                    0.75
+                    new NumberRange(0, 24, 0, 0.66),
+                    new NumberRange(16, 16, 0.33, 0.33),
+                    new NumberRange(800, 1200)
                 )
             case ExtraEffectPresetShape.Twinkle:
                 return new SpreadEffectData(
@@ -270,14 +267,7 @@ namespace extraEffects {
     function resizeTable(table: number[], newMax: number): number[] {
         const tableMax = table.reduce((max, curr) => curr > max ? curr : max, 1)
         const rescaleFactor = newMax / tableMax
-        return rescaleFactor < 1
-            ? table
-            : table.map(value => value >= 1 ? Math.max(1, Math.floor(value * rescaleFactor)) : 0)
-    }
-
-    function circleArea(diameter: number): number {
-        const radius = diameter / 2
-        return Math.PI * radius * radius
+        return table.map(value => value >= 1 ? Math.max(1, Math.floor(value * rescaleFactor)) : 0)
     }
 
     /**
@@ -306,13 +296,7 @@ namespace extraEffects {
         particlesPerSecond: number = 20,
         lifespan?: number,
     ): void {
-        createSpreadEffectOnAnchor(
-            { x: x, y: y },
-            effectData,
-            diameter,
-            particlesPerSecond,
-            (!!lifespan ? lifespan : undefined),
-        )
+        this.createSpreadParticleOnAnchor({ x: x, y: y })
     }
 
     /**
@@ -344,15 +328,17 @@ namespace extraEffects {
         createSpreadParticleSource(
             anchor,
             effectData.colorLookupTable,
-            resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2 * effectData.sizeScale)),
-            diameter >= 50 ? Math.floor(particlesPerSecond * circleArea(diameter) / circleArea(50)) : particlesPerSecond,
-            (!!lifespan ? lifespan : undefined),
-            effectData.lifespan.resizedMin(diameter / 2),
-            effectData.lifespan.resizedMax(diameter / 2),
-            effectData.spawnSpread.resizedMin(diameter / 2),
-            effectData.spawnSpread.resizedMax(diameter / 2),
-            effectData.lifespanSpread.resizedMin(diameter / 2),
-            effectData.lifespanSpread.resizedMax(diameter / 2),
+            effectData.allowParticleResizing
+                ? resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2))
+                : effectData.sizeLookupTable,
+            particlesPerSecond,
+            lifespan,
+            effectData.lifespan.resizedMin(diameter),
+            effectData.lifespan.resizedMax(diameter),
+            effectData.spawnSpread.resizedMin(diameter),
+            effectData.spawnSpread.resizedMax(diameter),
+            effectData.lifespanSpread.resizedMin(diameter),
+            effectData.lifespanSpread.resizedMax(diameter),
             effectData.extraVX,
             effectData.extraVY,
             effectData.extraVelocityMultiplierPercentage.min,
