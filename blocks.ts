@@ -291,7 +291,7 @@ namespace extraEffects {
      */
     //% inlineInputMode=inline
     //% group="Create"
-    //% block="start $effectData at x $x y $y|| with diameter $diameter density $particlesPerSecond for $lifespan ms"
+    //% block="start $effectData at x $x y $y for $lifespan ms|| with diameter $diameter density $particlesPerSecond"
     //% x.shadow="positionPicker" x.defl=75
     //% y.shadow="positionPicker" y.defl=55
     //% effectData.shadow=variables_get effectData.defl=myEffect
@@ -326,7 +326,7 @@ namespace extraEffects {
     //% inlineInputMode=inline
     //% group="Create"
     //% blockId="createSpreadEffectOnAnchor"
-    //% block="$anchor start $effectData|| with diameter $diameter density $particlesPerSecond for $lifespan ms"
+    //% block="$anchor start $effectData for $lifespan ms|| with diameter $diameter density $particlesPerSecond"
     //% anchor.shadow=variables_get anchor.defl=mySprite
     //% effectData.shadow=variables_get effectData.defl=myEffect
     //% diameter.min=20 diameter.max=100 diameter.defl=48
