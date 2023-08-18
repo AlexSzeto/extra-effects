@@ -25,52 +25,10 @@ enum ExtraEffectPresetShape {
 }
 
 /**
- * A reusable group of settings used to create a specific style of spread effect. The size and duration of the effect can be adjusted as they are being created.
- */
-//% blockNamespace=extraEffects
-class SpreadEffectData {
-    //% group="Data" blockSetVariable="myEffect"
-    //% blockCombine block="extra spawn vx"
-    public extraVX: number
-    //% group="Data" blockSetVariable="myEffect"
-    //% blockCombine block="extra spawn vy"
-    public extraVY: number
-    //% group="Data" blockSetVariable="myEffect"
-    //% blockCombine block="gravity"
-    public gravity: number
-    //% group="Data" blockSetVariable="myEffect"
-    //% blockCombine block="wave radius"
-    public sineShiftRadius: number
-
-    constructor(
-        public colorLookupTable: number[],
-        public sizeLookupTable: number[],
-        public spawnSpread: extraEffects.NumberRange,
-        public lifespanSpread: extraEffects.NumberRange,
-        public lifespan: extraEffects.NumberRange,
-        public sizeScale: number = 0,
-        extraVX: number = 0,
-        extraVY: number = 0,
-        public extraVelocityMultiplierPercentage: extraEffects.NumberRange = null,
-        gravity: number = 0,
-        sineShiftRadius: number = 0,
-        public tweenOutAfterLifespanPastPercentage: number = 50,
-    ) {
-        this.extraVX = extraVX
-        this.extraVY = extraVY
-        this.gravity = gravity
-        this.sineShiftRadius = sineShiftRadius
-        if (!extraVelocityMultiplierPercentage) {
-            this.extraVelocityMultiplierPercentage = new extraEffects.NumberRange(100, 100)
-        }
-    }
-}
-
-/**
  * Provides extra effects based on particles spreading out of a center point
  */
 //% color="#82047e" icon="\uf06d" block="Effects"
-//% groups="['Colors', 'Sizes', 'Data', 'Create']"
+//% groups="['Colors', 'Sizes', 'Data', 'Advanced Data', 'Create']"
 namespace extraEffects {
 
     const PRESET_COLOR_LUT = [
@@ -145,68 +103,6 @@ namespace extraEffects {
     //% max.min=0 max.max=100 max.defl=100
     export function __createPercentageRange(min: number, max: number): NumberRange {
         return new NumberRange(min, max)
-    }
-
-    /**
-     * Create a custom SpreadEffectData object from scratch. Read the description of each parameter or just play around with the settings to create a wide variety of unique effects.
-     * @param colorLookupTable a lookup table of color index values used to color the particles over time
-     * @param sizeLookupTable a lookup table of particle radius used to size the particles over time
-     * @param spawnSpread range of random spawn distance away from center
-     * @param lifespanSpread range of random distance traveled over the particle lifespan
-     * @param lifespan range of random particle lifespan
-     * @param vx extra x velocity added on particle spawn
-     * @param vy extra y velocity added on particle spawn
-     * @param velocityPercentageMultiplier range of random percentage to scale the extra velocity
-     * @param gravity gravity applied to all particles over time
-     * @param waveDiameter diameter of horizontal wave effect applied
-     * @param tweenOutLifespanBreakpoint applies velocity tween out after particle lifespan reaches break point
-     */
-    //% group="Data"
-    //% blockSetVariable=myEffect
-    //% block="custom effect set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier gravity $gravity decelerate after duration $tweenOutLifespanBreakpoint"
-    //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
-    //% sizeLookupTable.shadow="presetSizeTablePicker"
-    //% spawnSpread.shadow="pixelRangePicker"
-    //% lifespanSpread.shadow="pixelRangePicker"
-    //% lifespan.shadow="timeRangePicker"
-    //% expandableArgumentMode="toggle"
-    //% vx.min=-100 vx.max=100 vx.defl=0
-    //% vy.min=-100 vy.max=100 vy.defl=0
-    //% velocityPercentageMultiplier.shadow="percentRangePicker"
-    //% gravity.min=-100 gravity.max=100 gravity.defl=0
-    //% waveDiameter.min=0 waveDiameter.max=20, waveDiameter.defl=0
-    //% tweenOutLifespanBreakpoint.shadow="timePicker" tweenOutLifespanBreakpoint.defl=200
-    export function createCustomSpreadEffectData(
-        colorLookupTable: number[],
-        sizeLookupTable: number[],
-        spawnSpread: NumberRange,
-        lifespanSpread: NumberRange,
-        lifespan?: NumberRange,
-        vx: number = 0,
-        vy: number = 0,
-        velocityPercentageMultiplier: NumberRange = null,
-        gravity: number = 0,
-        waveDiameter: number = 0,
-        tweenOutLifespanBreakpoint: number = null,
-    ): SpreadEffectData {
-        return new SpreadEffectData(
-            colorLookupTable,
-            sizeLookupTable,
-            spawnSpread,
-            lifespanSpread,
-            lifespan,
-            0,
-            vx,
-            vy,
-            !!velocityPercentageMultiplier
-                ? velocityPercentageMultiplier
-                : new NumberRange(100, 100),
-            gravity,
-            Math.floor(waveDiameter / 2),
-            isNaN(tweenOutLifespanBreakpoint)
-                ? 50
-                : Math.floor(tweenOutLifespanBreakpoint / lifespan.max * 100)
-        )
     }
 
     /**
@@ -334,7 +230,7 @@ namespace extraEffects {
         particlesPerSecond: number = 20,
     ): void {
         createSpreadParticleSource(
-            {x: x, y: y},
+            { x: x, y: y },
             effectData.colorLookupTable,
             resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2 * effectData.sizeScale)),
             diameter >= 50 ? Math.floor(particlesPerSecond * circleArea(diameter) / circleArea(50)) : particlesPerSecond,
@@ -402,6 +298,68 @@ namespace extraEffects {
     }
 
     /**
+     * Create a custom SpreadEffectData object from scratch. Read the description of each parameter or just play around with the settings to create a wide variety of unique effects.
+     * @param colorLookupTable a lookup table of color index values used to color the particles over time
+     * @param sizeLookupTable a lookup table of particle radius used to size the particles over time
+     * @param spawnSpread range of random spawn distance away from center
+     * @param lifespanSpread range of random distance traveled over the particle lifespan
+     * @param lifespan range of random particle lifespan
+     * @param vx extra x velocity added on particle spawn
+     * @param vy extra y velocity added on particle spawn
+     * @param velocityPercentageMultiplier range of random percentage to scale the extra velocity
+     * @param gravity gravity applied to all particles over time
+     * @param waveDiameter diameter of horizontal wave effect applied
+     * @param tweenOutLifespanBreakpoint applies velocity tween out after particle lifespan reaches break point
+     */
+    //% group="Advanced Data" weight=100
+    //% blockSetVariable=myEffect
+    //% block="custom effect set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier gravity $gravity decelerate after duration $tweenOutLifespanBreakpoint"
+    //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
+    //% sizeLookupTable.shadow="presetSizeTablePicker"
+    //% spawnSpread.shadow="pixelRangePicker"
+    //% lifespanSpread.shadow="pixelRangePicker"
+    //% lifespan.shadow="timeRangePicker"
+    //% expandableArgumentMode="toggle"
+    //% vx.min=-100 vx.max=100 vx.defl=0
+    //% vy.min=-100 vy.max=100 vy.defl=0
+    //% velocityPercentageMultiplier.shadow="percentRangePicker"
+    //% gravity.min=-100 gravity.max=100 gravity.defl=0
+    //% waveDiameter.min=0 waveDiameter.max=20, waveDiameter.defl=0
+    //% tweenOutLifespanBreakpoint.shadow="timePicker" tweenOutLifespanBreakpoint.defl=200
+    export function createCustomSpreadEffectData(
+        colorLookupTable: number[],
+        sizeLookupTable: number[],
+        spawnSpread: NumberRange,
+        lifespanSpread: NumberRange,
+        lifespan?: NumberRange,
+        vx: number = 0,
+        vy: number = 0,
+        velocityPercentageMultiplier: NumberRange = null,
+        gravity: number = 0,
+        waveDiameter: number = 0,
+        tweenOutLifespanBreakpoint: number = null,
+    ): SpreadEffectData {
+        return new SpreadEffectData(
+            colorLookupTable,
+            sizeLookupTable,
+            spawnSpread,
+            lifespanSpread,
+            lifespan,
+            0,
+            vx,
+            vy,
+            !!velocityPercentageMultiplier
+                ? velocityPercentageMultiplier
+                : new NumberRange(100, 100),
+            gravity,
+            Math.floor(waveDiameter / 2),
+            isNaN(tweenOutLifespanBreakpoint)
+                ? 50
+                : Math.floor(tweenOutLifespanBreakpoint / lifespan.max * 100)
+        )
+    }
+
+    /**
      * Create a color table based on a preset color set
      * @param color 
      */
@@ -453,5 +411,47 @@ namespace extraEffects {
             result.push(size)
         }
         return result
+    }
+}
+
+/**
+ * A reusable group of settings used to create a specific style of spread effect. The size and duration of the effect can be adjusted as they are being created.
+ */
+//% blockNamespace=extraEffects
+class SpreadEffectData {
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="extra spawn vx"
+    public extraVX: number
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="extra spawn vy"
+    public extraVY: number
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="gravity"
+    public gravity: number
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="wave radius"
+    public sineShiftRadius: number
+
+    constructor(
+        public colorLookupTable: number[],
+        public sizeLookupTable: number[],
+        public spawnSpread: extraEffects.NumberRange,
+        public lifespanSpread: extraEffects.NumberRange,
+        public lifespan: extraEffects.NumberRange,
+        public sizeScale: number = 0,
+        extraVX: number = 0,
+        extraVY: number = 0,
+        public extraVelocityMultiplierPercentage: extraEffects.NumberRange = null,
+        gravity: number = 0,
+        sineShiftRadius: number = 0,
+        public tweenOutAfterLifespanPastPercentage: number = 50,
+    ) {
+        this.extraVX = extraVX
+        this.extraVY = extraVY
+        this.gravity = gravity
+        this.sineShiftRadius = sineShiftRadius
+        if (!extraVelocityMultiplierPercentage) {
+            this.extraVelocityMultiplierPercentage = new extraEffects.NumberRange(100, 100)
+        }
     }
 }

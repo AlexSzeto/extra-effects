@@ -272,6 +272,9 @@ namespace extraEffects {
         if (sourceLifespan >= 0) {
             src.lifespan = sourceLifespan
         }
+        if (anchor instanceof Sprite) {
+            src.z = anchor.z
+        }
         src.setAcceleration(0, gravity)
         return src
     }
