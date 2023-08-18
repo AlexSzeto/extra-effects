@@ -142,7 +142,7 @@ namespace extraEffects {
      */
     //% group="Data"
     //% blockSetVariable=myEffect
-    //% block="custom effect data set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier decelerate after duration $tweenOutLifespanBreakpoint"
+    //% block="custom effect set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier decelerate after duration $tweenOutLifespanBreakpoint"
     //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
     //% sizeLookupTable.shadow="presetSizeTablePicker"
     //% spawnSpread.shadow="pixelRangePicker"
@@ -192,7 +192,7 @@ namespace extraEffects {
     //% group="Data"
     //% inlineInputMode=inline
     //% blockId="presetEffectPicker"
-    //% block="effect data $color $shape"
+    //% block="effect $color $shape"
     export function createFullPresetsSpreadEffectData(
         color: ExtraEffectPresetColor,
         shape: ExtraEffectPresetShape,
@@ -212,7 +212,7 @@ namespace extraEffects {
     //% group="Data"
     //% inlineInputMode=inline
     //% blockId="createSingleColorSpreadEffectData"
-    //% block="effect data $color $shape"
+    //% block="effect $color $shape"
     //% color.shadow="colorindexpicker" color.defl=5
     export function createSingleColorSpreadEffectData(
         color: number,
