@@ -191,7 +191,7 @@ namespace extraEffects {
      */
     //% group="Data"
     //% inlineInputMode=inline
-    //% blockId="createFullPresetsSpreadEffectData"
+    //% blockId="presetEffectPicker"
     //% block="effect data $color $shape"
     export function createFullPresetsSpreadEffectData(
         color: ExtraEffectPresetColor,
@@ -292,9 +292,9 @@ namespace extraEffects {
     //% inlineInputMode=inline
     //% group="Create"
     //% block="start $effectData at x $x y $y for $lifespan ms|| with diameter $diameter density $particlesPerSecond"
-    //% effectData.shadow=createFullPresetsSpreadEffectData effectData.defl=myEffect
     //% x.shadow="positionPicker" x.defl=75
     //% y.shadow="positionPicker" y.defl=55
+    //% effectData.shadow="presetEffectPicker"
     //% lifespan.shadow="timePicker" lifespan.defl=100
     //% diameter.min=20 diameter.max=100 diameter.defl=48
     //% particlesPerSecond.min=10 particlesPerSecond.max=50 particlesPerSecond.defl=20
@@ -328,7 +328,7 @@ namespace extraEffects {
     //% blockId="createSpreadEffectOnAnchor"
     //% block="$anchor start $effectData for $lifespan ms|| with diameter $diameter density $particlesPerSecond"
     //% anchor.shadow=variables_get anchor.defl=mySprite
-    //% effectData.shadow=createFullPresetsSpreadEffectData effectData.defl=myEffect
+    //% effectData.shadow="presetEffectPicker"
     //% diameter.min=20 diameter.max=100 diameter.defl=48
     //% particlesPerSecond.min=10 particlesPerSecond.max=50 particlesPerSecond.defl=20
     //% lifespan.shadow="timePicker" lifespan.defl=100
