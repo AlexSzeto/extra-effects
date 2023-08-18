@@ -200,7 +200,7 @@ namespace extraEffects {
         colorLookupTable: number[],
         sizeLookupTable: number[],
         particlesPerSecond: number,
-        totalLifespan?: number,
+        totalLifespan: number,
         minParticleLifespan: number = 200,
         maxParticleLifespan: number = 200,
         minSpawnSpread: number = 0,
@@ -230,7 +230,7 @@ namespace extraEffects {
         );
 
         let sourceLifespan = totalLifespan
-        if (!!sourceLifespan) {
+        if (sourceLifespan > 0) {
             sourceLifespan = Math.max(200, sourceLifespan - maxParticleLifespan)
             if (sourceLifespan < 1000) {
                 particlesPerSecond *= 500 / sourceLifespan
@@ -243,7 +243,7 @@ namespace extraEffects {
             factory
         )
 
-        if (!!sourceLifespan) {
+        if (sourceLifespan > 0) {
             src.lifespan = sourceLifespan
         }
 

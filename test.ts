@@ -1,19 +1,37 @@
 // tests go here; this will not be compiled when this package is used as an extension.
-let sfx = extraEffects.createFullPresetsSpreadEffectData(
-    ExtraEffectPresetColor.Fire,
-    ExtraEffectPresetShape.Explosion
+
+let sfx
+let calibrationCenter = sprites.create(image.create(1, 1), SpriteKind.Player)
+let calibrationEffect = extraEffects.createCustomSpreadEffectData(
+    [14], [1], new extraEffects.NumberRange(0, 0, 1.0, 1.0), new extraEffects.NumberRange(0, 0), new extraEffects.NumberRange(100, 100)
 )
 
-for (let i = 1; i < 10; i++) {
-    let lifespan = i * 200
-    info.setScore(lifespan)
-    extraEffects.createSpreadEffectAt(
-        scene.screenWidth() / 2,
-        scene.screenHeight() / 2,
-        sfx,
-        20,
-        48,
-        lifespan
-    )    
-    pause(lifespan + 1000)
+for (let color = 0; color < 6; color++) {
+    for (let shape = 0; shape < 4; shape++) {
+        sfx = extraEffects.createFullPresetsSpreadEffectData(
+            color,
+            shape
+        )
+        for (let diameter = 1; diameter <= 4; diameter++) {
+            effects.clearParticles(calibrationCenter)
+            extraEffects.createSpreadEffectOnAnchor(
+                calibrationCenter,
+                calibrationEffect,
+                diameter * 24,
+                300,
+            )
+            for (let density = 0; density < 2; density++) {
+                extraEffects.createSpreadEffectAt(
+                    scene.screenWidth() / 2,
+                    scene.screenHeight() / 2,
+                    sfx,
+                    diameter * 24,
+                    20 + density * 40,
+                    200
+                )
+                pause(1400)
+            }
+        }
+    }
 }
+effects.clearParticles(calibrationCenter)

@@ -27,7 +27,7 @@ enum ExtraEffectPresetShape {
 /**
  * Provides extra effects based on particles spreading out of a center point
  */
-//% color="#82047e" icon="\uf06d" block="Effects" advanced=true
+//% color="#82047e" icon="\uf06d" block="Effects"
 //% groups="['Colors', 'Sizes', 'Data', 'Create']"
 namespace extraEffects {
 
@@ -51,8 +51,8 @@ namespace extraEffects {
         constructor(
             public min: number,
             public max: number,
-            public minScale: number = 1.0,
-            public maxScale: number = 1.0,
+            public minScale: number = 0,
+            public maxScale: number = 0,
         ) {
             if (min > max) {
                 this.min = max
@@ -61,7 +61,7 @@ namespace extraEffects {
         }
 
         resizedMin(size: number): number {
-            return Math.max(this.min, this.minScale * size)            
+            return Math.max(this.min, this.minScale * size)
         }
 
         resizedMax(size: number): number {
@@ -92,7 +92,7 @@ namespace extraEffects {
     export function __createPixelRange(min: number, max: number): NumberRange {
         return new NumberRange(min, max)
     }
-    
+
     /**
      * Factory function for creating a percentage based number range
      */
@@ -115,13 +115,13 @@ namespace extraEffects {
             public spawnSpread: NumberRange,
             public lifespanSpread: NumberRange,
             public lifespan: NumberRange,
+            public sizeScale: number = 0,
             public extraVX: number = 0,
             public extraVY: number = 0,
             public extraVelocityMultiplierPercentage: NumberRange = null,
             public tweenOutAfterLifespanPastPercentage: number = 50,
-            public allowParticleResizing: boolean = false,
-        ) { 
-            if(!extraVelocityMultiplierPercentage) {
+        ) {
+            if (!extraVelocityMultiplierPercentage) {
                 this.extraVelocityMultiplierPercentage = new NumberRange(0, 0)
             }
         }
@@ -142,7 +142,7 @@ namespace extraEffects {
      */
     //% group="Data"
     //% blockSetVariable=myEffect
-    //% block="custom effect set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier decelerate after duration $tweenOutLifespanBreakpoint"
+    //% block="custom effect data set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier decelerate after duration $tweenOutLifespanBreakpoint"
     //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
     //% sizeLookupTable.shadow="presetSizeTablePicker"
     //% spawnSpread.shadow="pixelRangePicker"
@@ -170,6 +170,7 @@ namespace extraEffects {
             spawnSpread,
             lifespanSpread,
             lifespan,
+            0,
             vx,
             vy,
             !!velocityPercentageMultiplier
@@ -191,7 +192,7 @@ namespace extraEffects {
     //% group="Data"
     //% inlineInputMode=inline
     //% blockId="createFullPresetsSpreadEffectData"
-    //% block="preset effect $color $shape"
+    //% block="effect data $color $shape"
     export function createFullPresetsSpreadEffectData(
         color: ExtraEffectPresetColor,
         shape: ExtraEffectPresetShape,
@@ -211,12 +212,12 @@ namespace extraEffects {
     //% group="Data"
     //% inlineInputMode=inline
     //% blockId="createSingleColorSpreadEffectData"
-    //% block="single color effect $color $shape"
+    //% block="effect data $color $shape"
     //% color.shadow="colorindexpicker" color.defl=5
     export function createSingleColorSpreadEffectData(
         color: number,
         shape: ExtraEffectPresetShape,
-    ): SpreadEffectData  {
+    ): SpreadEffectData {
         return __createShapePresetSpreadEffectData(
             [color],
             shape,
@@ -234,24 +235,26 @@ namespace extraEffects {
                     colorLookupTable,
                     sizeLookupTable,
                     new NumberRange(0, 0),
-                    new NumberRange(12, 24, 0, 1.0),
-                    new NumberRange(300, 400)
+                    new NumberRange(3, 6, 0, 2.0),
+                    new NumberRange(300, 400),
                 )
             case ExtraEffectPresetShape.Explosion:
                 return new SpreadEffectData(
                     colorLookupTable,
                     sizeLookupTable,
-                    new NumberRange(0, 24, 0, 0.5),
-                    new NumberRange(12, 18, 0.5, 0.75),
-                    new NumberRange(400, 600)
+                    new NumberRange(0, 6, 0, 0.33),
+                    new NumberRange(3, 6, 0.50, 0.75),
+                    new NumberRange(400, 600),
+                    0.66
                 )
             case ExtraEffectPresetShape.Cloud:
                 return new SpreadEffectData(
                     colorLookupTable,
                     sizeLookupTable,
-                    new NumberRange(0, 24, 0, 0.66),
-                    new NumberRange(16, 16, 0.33, 0.33),
-                    new NumberRange(800, 1200)
+                    new NumberRange(0, 6, 0, 0.66),
+                    new NumberRange(4, 4, 0.33, 0.33),
+                    new NumberRange(800, 1200),
+                    0.75
                 )
             case ExtraEffectPresetShape.Twinkle:
                 return new SpreadEffectData(
@@ -267,7 +270,14 @@ namespace extraEffects {
     function resizeTable(table: number[], newMax: number): number[] {
         const tableMax = table.reduce((max, curr) => curr > max ? curr : max, 1)
         const rescaleFactor = newMax / tableMax
-        return table.map(value => value >= 1 ? Math.max(1, Math.floor(value * rescaleFactor)) : 0)
+        return rescaleFactor < 1
+            ? table
+            : table.map(value => value >= 1 ? Math.max(1, Math.floor(value * rescaleFactor)) : 0)
+    }
+
+    function circleArea(diameter: number): number {
+        const radius = diameter / 2
+        return Math.PI * radius * radius
     }
 
     /**
@@ -281,20 +291,20 @@ namespace extraEffects {
      */
     //% inlineInputMode=inline
     //% group="Create"
-    //% block="start $effectData at x $x y $y|| with diameter $diameter|| density $particlesPerSecond|| for $lifespan ms"
-    //% effectData.shadow=variables_get effectData.defl=myEffect
-    //% diameter.min=20 diameter.max=100 diameter.defl=48
+    //% block="start $effectData at x $x y $y|| with diameter $diameter density $particlesPerSecond for $lifespan ms"
     //% x.shadow="positionPicker" x.defl=75
     //% y.shadow="positionPicker" y.defl=55
-    //% lifespan.shadow="timePicker" lifespan.defl=100
+    //% effectData.shadow=variables_get effectData.defl=myEffect
+    //% diameter.min=20 diameter.max=100 diameter.defl=48
     //% particlesPerSecond.min=10 particlesPerSecond.max=50 particlesPerSecond.defl=20
+    //% lifespan.shadow="timePicker" lifespan.defl=100
     export function createSpreadEffectAt(
         x: number,
         y: number,
         effectData: SpreadEffectData,
         diameter: number = 48,
         particlesPerSecond: number = 20,
-        lifespan?: number,
+        lifespan: number = 0,
     ): void {
         createSpreadEffectOnAnchor(
             { x: x, y: y },
@@ -316,35 +326,31 @@ namespace extraEffects {
     //% inlineInputMode=inline
     //% group="Create"
     //% blockId="createSpreadEffectOnAnchor"
-    //% block="$sprite start $effectData|| with diameter $diameter|| density $particlesPerSecond|| for $lifespan ms"
-    //% sprite.shadow=variables_get sprite.defl=mySprite
+    //% block="$anchor start $effectData|| with diameter $diameter density $particlesPerSecond for $lifespan ms"
+    //% anchor.shadow=variables_get anchor.defl=mySprite
     //% effectData.shadow=variables_get effectData.defl=myEffect
     //% diameter.min=20 diameter.max=100 diameter.defl=48
-    //% x.shadow="positionPicker" x.defl=75
-    //% y.shadow="positionPicker" y.defl=55
-    //% lifespan.shadow="timePicker" lifespan.defl=100
     //% particlesPerSecond.min=10 particlesPerSecond.max=50 particlesPerSecond.defl=20
+    //% lifespan.shadow="timePicker" lifespan.defl=100
     export function createSpreadEffectOnAnchor(
         anchor: particles.ParticleAnchor,
         effectData: SpreadEffectData,
         diameter: number = 48,
         particlesPerSecond: number = 20,
-        lifespan?: number,
+        lifespan: number = 0,
     ): void {
         createSpreadParticleSource(
             anchor,
             effectData.colorLookupTable,
-            effectData.allowParticleResizing
-                ? resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2))
-                : effectData.sizeLookupTable,
-            particlesPerSecond,
+            resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2 * effectData.sizeScale)),
+            diameter >= 50 ? Math.floor(particlesPerSecond * circleArea(diameter) / circleArea(50)) : particlesPerSecond,
             lifespan,
-            effectData.lifespan.resizedMin(diameter),
-            effectData.lifespan.resizedMax(diameter),
-            effectData.spawnSpread.resizedMin(diameter),
-            effectData.spawnSpread.resizedMax(diameter),
-            effectData.lifespanSpread.resizedMin(diameter),
-            effectData.lifespanSpread.resizedMax(diameter),
+            effectData.lifespan.resizedMin(diameter / 2),
+            effectData.lifespan.resizedMax(diameter / 2),
+            effectData.spawnSpread.resizedMin(diameter / 2),
+            effectData.spawnSpread.resizedMax(diameter / 2),
+            effectData.lifespanSpread.resizedMin(diameter / 2),
+            effectData.lifespanSpread.resizedMax(diameter / 2),
             effectData.extraVX,
             effectData.extraVY,
             effectData.extraVelocityMultiplierPercentage.min,
@@ -370,7 +376,7 @@ namespace extraEffects {
      */
     //% group="Sizes" color="#ff9008"
     //% blockId="presetSizeTablePicker"
-    //% block="sizes matching shape $shape"
+    //% block="array of $shape sizes"
     export function createPresetSizeTable(shape: ExtraEffectPresetShape): number[] {
         return PRESET_SIZE_LUT[shape]
     }
