@@ -306,18 +306,29 @@ namespace extraEffects {
         diameter: number = 48,
         particlesPerSecond: number = 20,
     ): void {
-        createSpreadEffectOnAnchor(
-            { x: x, y: y },
-            effectData,
+        createSpreadParticleSource(
+            {x: x, y: y},
+            effectData.colorLookupTable,
+            resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2 * effectData.sizeScale)),
+            diameter >= 50 ? Math.floor(particlesPerSecond * circleArea(diameter) / circleArea(50)) : particlesPerSecond,
             lifespan,
-            diameter,
-            particlesPerSecond,
+            effectData.lifespan.resizedMin(diameter / 2),
+            effectData.lifespan.resizedMax(diameter / 2),
+            effectData.spawnSpread.resizedMin(diameter / 2),
+            effectData.spawnSpread.resizedMax(diameter / 2),
+            effectData.lifespanSpread.resizedMin(diameter / 2),
+            effectData.lifespanSpread.resizedMax(diameter / 2),
+            effectData.extraVX,
+            effectData.extraVY,
+            effectData.extraVelocityMultiplierPercentage.min,
+            effectData.extraVelocityMultiplierPercentage.max,
+            effectData.tweenOutAfterLifespanPastPercentage,
         )
     }
 
     /**
-     * Create a spread effect on a Sprite or other valid anchor objects
-     * @param anchor a valid anchor object for the generated effect
+     * Create a spread effect on a Sprite
+     * @param sprite a valid sprite object for the generated effect
      * @param effectData data used to setup the effect particles
      * @param diameter the maximum spread of the effect from edge to edge
      * @param particlesPerSecond frequency for generating particles
@@ -326,21 +337,21 @@ namespace extraEffects {
     //% inlineInputMode=inline
     //% group="Create"
     //% blockId="createSpreadEffectOnAnchor"
-    //% block="$anchor start $effectData for $lifespan ms|| with diameter $diameter density $particlesPerSecond"
-    //% anchor.shadow=variables_get anchor.defl=mySprite
+    //% block="$sprite start $effectData for $lifespan ms|| with diameter $diameter density $particlesPerSecond"
+    //% sprite.shadow=variables_get sprite.defl=mySprite
     //% effectData.shadow="createSingleColorSpreadEffectData"
     //% diameter.min=20 diameter.max=100 diameter.defl=48
     //% particlesPerSecond.min=10 particlesPerSecond.max=50 particlesPerSecond.defl=20
     //% lifespan.shadow="timePicker" lifespan.defl=100
     export function createSpreadEffectOnAnchor(
-        anchor: particles.ParticleAnchor,
+        sprite: Sprite,
         effectData: SpreadEffectData,
         lifespan: number = 100,
         diameter: number = 48,
         particlesPerSecond: number = 20,
     ): void {
         createSpreadParticleSource(
-            anchor,
+            sprite,
             effectData.colorLookupTable,
             resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2 * effectData.sizeScale)),
             diameter >= 50 ? Math.floor(particlesPerSecond * circleArea(diameter) / circleArea(50)) : particlesPerSecond,
