@@ -296,7 +296,13 @@ namespace extraEffects {
         particlesPerSecond: number = 20,
         lifespan?: number,
     ): void {
-        this.createSpreadParticleOnAnchor({ x: x, y: y })
+        createSpreadEffectOnAnchor(
+            { x: x, y: y },
+            effectData,
+            diameter,
+            particlesPerSecond,
+            lifespan,
+        )
     }
 
     /**
