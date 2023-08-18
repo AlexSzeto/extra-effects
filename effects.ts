@@ -4,6 +4,9 @@ namespace extraEffects {
     let cachedFourPixelCircle: Image
     let cachedSixPixelCircle: Image
 
+    let sineShiftPhase: number = 0
+    let sineShiftLUT: Fx8[]
+
     const NUM_SLICES = 90
     const MAX_LUT_SLICES = 20
     const MAX_TWEEN_SLICES = 20
@@ -31,6 +34,17 @@ namespace extraEffects {
             . F F F F .
             . . F F . .
             `
+            sineShiftLUT = []
+            for (let i = 0; i < NUM_SLICES; i++) {
+                const curr = (sineShiftPhase + i) % NUM_SLICES
+                const next = (sineShiftPhase + i + 1) % NUM_SLICES
+                sineShiftLUT.push(Fx.sub(cachedSin[curr], cachedSin[next]))
+            }
+
+            forever(() => {
+                sineShiftPhase = (sineShiftPhase + 10) % NUM_SLICES
+                pause(100)
+            })
         }
     }
 
@@ -57,6 +71,7 @@ namespace extraEffects {
         private lifespanSpreadLookupTable: Fx8[]
         private extraVX: Fx8
         private extraVY: Fx8
+        private sineShiftRadius: Fx8
         private extraVelocityPercentageMultiplierLookupTable: Fx8[]
 
         /**
@@ -73,6 +88,7 @@ namespace extraEffects {
          * @param extraVY extra y velocity added to the particle on spawn
          * @param minExtraVelocityPercentageMultiplier minimum randomized percentage multiplier for the added velocity
          * @param maxExtraVelocityPercentageMultiplier maximum randomized percentage multiplier for the added velocity
+         * @param sinShiftRadius adds a horizontal pixel shift that resembles a sine wave
          * @param tweenOutAfterLifespanPastPercentage lifespan percentage cutoff before the particle velocity tweens out 
          */
         constructor(
@@ -88,6 +104,7 @@ namespace extraEffects {
             extraVY: number,
             minExtraVelocityPercentageMultiplier: number,
             maxExtraVelocityPercentageMultiplier: number,
+            sineShiftRadius: number,
             private tweenOutAfterLifespanPastPercentage: number,
         ) {
             super()
@@ -103,6 +120,7 @@ namespace extraEffects {
             this.lifespanSpreadLookupTable = createNumberRangeLookupTable(minLifespanSpread * 1000 / maxLifespan, maxLifespanSpread * 1000 / maxLifespan)
             this.extraVX = Fx8(extraVX)
             this.extraVY = Fx8(extraVY)
+            this.sineShiftRadius = Fx8(sineShiftRadius)
             this.extraVelocityPercentageMultiplierLookupTable = createNumberRangeLookupTable(minExtraVelocityPercentageMultiplier, maxExtraVelocityPercentageMultiplier)
             this.tweenOutAfterLifespanPastPercentage = 100 - tweenOutAfterLifespanPastPercentage
         }
@@ -112,7 +130,8 @@ namespace extraEffects {
 
             p.lifespan = galois.randomRange(this.minLifespan, this.maxLifespan - 1)
             p.data = (this.tweenOutAfterLifespanPastPercentage * MAX_TWEEN_SLICES / 100) * this.tweenOutSlice
-
+            p.color = Math.floor(galois.randomRange(0, NUM_SLICES - 1))
+            
             const angle = galois.randomRange(0, NUM_SLICES - 1)
             const spawnSpreadMultiplier = galois.pickRandom(this.spawnSpreadLookupTable)
             const velocityMultiplier = galois.pickRandom(this.lifespanSpreadLookupTable)
@@ -167,6 +186,8 @@ namespace extraEffects {
                     break
             }
 
+            p._x = Fx.add(p._x, Fx.mul(sineShiftLUT[(sineShiftPhase + p.color) % NUM_SLICES], this.sineShiftRadius))
+
             while (p.lifespan < p.data) {
                 p.data -= this.tweenOutSlice
                 p.vx = Fx.div(Fx.mul(p.vx, Fx8(90)), Fx8(100))
@@ -213,6 +234,7 @@ namespace extraEffects {
         minExtraVelocityPercentageMultiplier: number = 100,
         maxExtraVelocityPercentageMultiplier: number = 100,
         gravity: number = 0,
+        sineShiftRadius: number = 0,
         tweenOutAfterLifespanPastPercentage: number = 50,
     ): particles.ParticleSource {
         const factory = new SpreadParticleFactory(
@@ -228,7 +250,9 @@ namespace extraEffects {
             extraVY,
             minExtraVelocityPercentageMultiplier,
             maxExtraVelocityPercentageMultiplier,
+            sineShiftRadius,
             tweenOutAfterLifespanPastPercentage,
+            
         );
 
         let sourceLifespan = totalLifespan

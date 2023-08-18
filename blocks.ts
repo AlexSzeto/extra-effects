@@ -25,6 +25,48 @@ enum ExtraEffectPresetShape {
 }
 
 /**
+ * A reusable group of settings used to create a specific style of spread effect. The size and duration of the effect can be adjusted as they are being created.
+ */
+//% blockNamespace=extraEffects
+class SpreadEffectData {
+    //% group="Data" blockSetVariable="myEffect"
+    //% blockCombine block="extra spawn vx"
+    public extraVX: number
+    //% group="Data" blockSetVariable="myEffect"
+    //% blockCombine block="extra spawn vy"
+    public extraVY: number
+    //% group="Data" blockSetVariable="myEffect"
+    //% blockCombine block="gravity"
+    public gravity: number
+    //% group="Data" blockSetVariable="myEffect"
+    //% blockCombine block="wave radius"
+    public sineShiftRadius: number
+
+    constructor(
+        public colorLookupTable: number[],
+        public sizeLookupTable: number[],
+        public spawnSpread: extraEffects.NumberRange,
+        public lifespanSpread: extraEffects.NumberRange,
+        public lifespan: extraEffects.NumberRange,
+        public sizeScale: number = 0,
+        extraVX: number = 0,
+        extraVY: number = 0,
+        public extraVelocityMultiplierPercentage: extraEffects.NumberRange = null,
+        gravity: number = 0,
+        sineShiftRadius: number = 0,
+        public tweenOutAfterLifespanPastPercentage: number = 50,
+    ) {
+        this.extraVX = extraVX
+        this.extraVY = extraVY
+        this.gravity = gravity
+        this.sineShiftRadius = sineShiftRadius
+        if (!extraVelocityMultiplierPercentage) {
+            this.extraVelocityMultiplierPercentage = new extraEffects.NumberRange(100, 100)
+        }
+    }
+}
+
+/**
  * Provides extra effects based on particles spreading out of a center point
  */
 //% color="#82047e" icon="\uf06d" block="Effects"
@@ -32,7 +74,7 @@ enum ExtraEffectPresetShape {
 namespace extraEffects {
 
     const PRESET_COLOR_LUT = [
-        [1, 5, 4, 2, 10, 10],
+        [1, 5, 4, 2, 14, 14],
         [1, 1, 1, 9, 9, 6, 8],
         [5, 7, 7, 6, 6, 8],
         [1, 5, 4, 5, 1, 5, 1, 5, 1, 5, 4],
@@ -106,29 +148,6 @@ namespace extraEffects {
     }
 
     /**
-     * A reusable group of settings used to create a specific style of spread effect. The size and duration of the effect can be adjusted as they are being created.
-     */
-    export class SpreadEffectData {
-        constructor(
-            public colorLookupTable: number[],
-            public sizeLookupTable: number[],
-            public spawnSpread: NumberRange,
-            public lifespanSpread: NumberRange,
-            public lifespan: NumberRange,
-            public sizeScale: number = 0,
-            public extraVX: number = 0,
-            public extraVY: number = 0,
-            public extraVelocityMultiplierPercentage: NumberRange = null,
-            public gravity: number = 0,
-            public tweenOutAfterLifespanPastPercentage: number = 50,
-        ) {
-            if (!extraVelocityMultiplierPercentage) {
-                this.extraVelocityMultiplierPercentage = new NumberRange(0, 0)
-            }
-        }
-    }
-
-    /**
      * Create a custom SpreadEffectData object from scratch. Read the description of each parameter or just play around with the settings to create a wide variety of unique effects.
      * @param colorLookupTable a lookup table of color index values used to color the particles over time
      * @param sizeLookupTable a lookup table of particle radius used to size the particles over time
@@ -139,6 +158,7 @@ namespace extraEffects {
      * @param vy extra y velocity added on particle spawn
      * @param velocityPercentageMultiplier range of random percentage to scale the extra velocity
      * @param gravity gravity applied to all particles over time
+     * @param waveDiameter diameter of horizontal wave effect applied
      * @param tweenOutLifespanBreakpoint applies velocity tween out after particle lifespan reaches break point
      */
     //% group="Data"
@@ -154,6 +174,7 @@ namespace extraEffects {
     //% vy.min=-100 vy.max=100 vy.defl=0
     //% velocityPercentageMultiplier.shadow="percentRangePicker"
     //% gravity.min=-100 gravity.max=100 gravity.defl=0
+    //% waveDiameter.min=0 waveDiameter.max=20, waveDiameter.defl=0
     //% tweenOutLifespanBreakpoint.shadow="timePicker" tweenOutLifespanBreakpoint.defl=200
     export function createCustomSpreadEffectData(
         colorLookupTable: number[],
@@ -165,6 +186,7 @@ namespace extraEffects {
         vy: number = 0,
         velocityPercentageMultiplier: NumberRange = null,
         gravity: number = 0,
+        waveDiameter: number = 0,
         tweenOutLifespanBreakpoint: number = null,
     ): SpreadEffectData {
         return new SpreadEffectData(
@@ -180,6 +202,7 @@ namespace extraEffects {
                 ? velocityPercentageMultiplier
                 : new NumberRange(100, 100),
             gravity,
+            Math.floor(waveDiameter / 2),
             isNaN(tweenOutLifespanBreakpoint)
                 ? 50
                 : Math.floor(tweenOutLifespanBreakpoint / lifespan.max * 100)
@@ -327,6 +350,7 @@ namespace extraEffects {
             effectData.extraVelocityMultiplierPercentage.min,
             effectData.extraVelocityMultiplierPercentage.max,
             effectData.gravity,
+            effectData.sineShiftRadius,
             effectData.tweenOutAfterLifespanPastPercentage,
         )
     }
@@ -372,6 +396,7 @@ namespace extraEffects {
             effectData.extraVelocityMultiplierPercentage.min,
             effectData.extraVelocityMultiplierPercentage.max,
             effectData.gravity,
+            effectData.sineShiftRadius,
             effectData.tweenOutAfterLifespanPastPercentage,
         )
     }
