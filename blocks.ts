@@ -119,6 +119,7 @@ namespace extraEffects {
             public extraVX: number = 0,
             public extraVY: number = 0,
             public extraVelocityMultiplierPercentage: NumberRange = null,
+            public gravity: number = 0,
             public tweenOutAfterLifespanPastPercentage: number = 50,
         ) {
             if (!extraVelocityMultiplierPercentage) {
@@ -137,12 +138,12 @@ namespace extraEffects {
      * @param vx extra x velocity added on particle spawn
      * @param vy extra y velocity added on particle spawn
      * @param velocityPercentageMultiplier range of random percentage to scale the extra velocity
+     * @param gravity gravity applied to all particles over time
      * @param tweenOutLifespanBreakpoint applies velocity tween out after particle lifespan reaches break point
-     * @returns 
      */
     //% group="Data"
     //% blockSetVariable=myEffect
-    //% block="custom effect set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier decelerate after duration $tweenOutLifespanBreakpoint"
+    //% block="custom effect set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier gravity $gravity decelerate after duration $tweenOutLifespanBreakpoint"
     //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
     //% sizeLookupTable.shadow="presetSizeTablePicker"
     //% spawnSpread.shadow="pixelRangePicker"
@@ -152,6 +153,7 @@ namespace extraEffects {
     //% vx.min=-100 vx.max=100 vx.defl=0
     //% vy.min=-100 vy.max=100 vy.defl=0
     //% velocityPercentageMultiplier.shadow="percentRangePicker"
+    //% gravity.min=-100 gravity.max=100 gravity.defl=0
     //% tweenOutLifespanBreakpoint.shadow="timePicker" tweenOutLifespanBreakpoint.defl=200
     export function createCustomSpreadEffectData(
         colorLookupTable: number[],
@@ -162,6 +164,7 @@ namespace extraEffects {
         vx: number = 0,
         vy: number = 0,
         velocityPercentageMultiplier: NumberRange = null,
+        gravity: number = 0,
         tweenOutLifespanBreakpoint: number = null,
     ): SpreadEffectData {
         return new SpreadEffectData(
@@ -176,6 +179,7 @@ namespace extraEffects {
             !!velocityPercentageMultiplier
                 ? velocityPercentageMultiplier
                 : new NumberRange(100, 100),
+            gravity,
             isNaN(tweenOutLifespanBreakpoint)
                 ? 50
                 : Math.floor(tweenOutLifespanBreakpoint / lifespan.max * 100)
@@ -322,6 +326,7 @@ namespace extraEffects {
             effectData.extraVY,
             effectData.extraVelocityMultiplierPercentage.min,
             effectData.extraVelocityMultiplierPercentage.max,
+            effectData.gravity,
             effectData.tweenOutAfterLifespanPastPercentage,
         )
     }
@@ -366,6 +371,7 @@ namespace extraEffects {
             effectData.extraVY,
             effectData.extraVelocityMultiplierPercentage.min,
             effectData.extraVelocityMultiplierPercentage.max,
+            effectData.gravity,
             effectData.tweenOutAfterLifespanPastPercentage,
         )
     }

@@ -121,7 +121,7 @@ namespace extraEffects {
             p._x = Fx.add(p._x, Fx.mul(cachedCos[angle], spawnSpreadMultiplier))
             p._y = Fx.add(p._y, Fx.mul(cachedSin[angle], spawnSpreadMultiplier))
             p.vx = Fx.add(Fx.mul(cachedCos[angle], velocityMultiplier), Fx.mul(this.extraVX, extraVelocityMultiplier))
-            p.vy = Fx.add(Fx.mul(cachedSin[angle], velocityMultiplier), Fx.mul(this.extraVY, extraVelocityMultiplier))
+            p.vy = Fx.add(Fx.mul(cachedSin[angle], velocityMultiplier), Fx.mul(this.extraVY, extraVelocityMultiplier))            
 
             return p;
         }
@@ -192,7 +192,8 @@ namespace extraEffects {
      * @param extraVY extra y velocity added to the particle on spawn
      * @param minExtraVelocityPercentageMultiplier minimum randomized percentage multiplier for the added velocity
      * @param maxExtraVelocityPercentageMultiplier maximum randomized percentage multiplier for the added velocity
-     * @param tweenOutAfterLifespanPastPercentage lifespan percentage cutoff before the particle velocity tweens out 
+     * @param gravity y acceleration added to the velocity over time
+     * @param tweenOutAfterLifespanPastPercentage lifespan percentage cutoff before the particle velocity tweens out
      * @returns 
      */
     export function createSpreadParticleSource(
@@ -211,6 +212,7 @@ namespace extraEffects {
         extraVY: number = 0,
         minExtraVelocityPercentageMultiplier: number = 100,
         maxExtraVelocityPercentageMultiplier: number = 100,
+        gravity: number = 0,
         tweenOutAfterLifespanPastPercentage: number = 50,
     ): particles.ParticleSource {
         const factory = new SpreadParticleFactory(
@@ -246,7 +248,7 @@ namespace extraEffects {
         if (sourceLifespan >= 0) {
             src.lifespan = sourceLifespan
         }
-
+        src.setAcceleration(0, gravity)
         return src
     }
 }
