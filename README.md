@@ -4,6 +4,11 @@
 - try replacing the effect data shadow block with the fire spark block from the `Data` section. Try using other word combinations!
 - for full customization, create an effect data object from scratch using the gigantc custom effect data block!
 
+## Sample Project
+
+A sample project is available here:
+https://arcade.makecode.com/S25961-93672-24496-79526
+
 ## Tips and Tricks
 
 - to create infinite effects, set the effect duration to a negative number.
