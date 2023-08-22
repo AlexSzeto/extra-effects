@@ -454,4 +454,21 @@ class SpreadEffectData {
             this.extraVelocityMultiplierPercentage = new extraEffects.NumberRange(100, 100)
         }
     }
+
+    //% group="Advanced Data"
+    //% block="set $this colors to $colorLookupTable"
+    //% this.defl=myEffect
+    //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
+    public setSpreadEffectDataColorLookupTable(colorLookupTable: number[]): void {
+        this.colorLookupTable = colorLookupTable
+    }
+
+    //% group="Advanced Data"
+    //% block="set $this sizes to $sizeLookupTable"
+    //% this.defl=myEffect
+    //% sizeLookupTable.shadow="presetSizeTablePicker"
+    public setSpreadEffectDataSizeLookupTable(sizeLookupTable: number[]): void {
+        this.sizeLookupTable = sizeLookupTable
+    }
+
 }
