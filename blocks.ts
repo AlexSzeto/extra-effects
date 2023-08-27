@@ -299,7 +299,7 @@ namespace extraEffects {
      */
     //% group="Advanced Data" weight=100
     //% blockSetVariable=myEffect
-    //% block="custom effect set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier gravity $gravity decelerate after duration $tweenOutLifespanBreakpoint"
+    //% block="custom effect set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier gravity $gravity wave diameter $waveDiameter decelerate after duration $tweenOutLifespanBreakpoint"
     //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
     //% sizeLookupTable.shadow="presetSizeTablePicker"
     //% spawnSpread.shadow="percentRangePicker"
