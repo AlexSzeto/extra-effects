@@ -51,8 +51,6 @@ namespace extraEffects {
         constructor(
             public min: number,
             public max: number,
-            public minScale: number = 0,
-            public maxScale: number = 0,
         ) {
             if (min > max) {
                 this.min = max
@@ -61,11 +59,11 @@ namespace extraEffects {
         }
 
         resizedMin(size: number): number {
-            return Math.max(this.min, this.minScale * size)
+            return Math.max(1, this.min * size / 100)
         }
 
         resizedMax(size: number): number {
-            return Math.max(this.max, this.maxScale * size)
+            return Math.max(1, this.max * size / 100)
         }
     }
 
@@ -77,19 +75,7 @@ namespace extraEffects {
     //% block="between $min and $max ms"
     //% min.defl=200 max.defl=400
     //% min.shadow="timePicker" max.shadow="timePicker"
-    export function __createTimeRange(min: number, max: number): NumberRange {
-        return new NumberRange(min, max)
-    }
-
-    /**
-     * Factory fuction for creating a pixel based number range
-     */
-    //% blockId="pixelRangePicker"
-    //% blockHidden=true
-    //% block="between $min and $max pixels away"
-    //% min.min=0 min.max=50 min.defl=0
-    //% max.min=0 max.max=50 max.defl=20
-    export function __createPixelRange(min: number, max: number): NumberRange {
+    export function createTimeRange(min: number, max: number): NumberRange {
         return new NumberRange(min, max)
     }
 
@@ -101,7 +87,7 @@ namespace extraEffects {
     //% block="between $min and $max \\%"
     //% min.min=0 min.max=100 min.defl=50
     //% max.min=0 max.max=100 max.defl=100
-    export function __createPercentageRange(min: number, max: number): NumberRange {
+    export function createPercentageRange(min: number, max: number): NumberRange {
         return new NumberRange(min, max)
     }
 
@@ -158,15 +144,15 @@ namespace extraEffects {
                     colorLookupTable,
                     sizeLookupTable,
                     new NumberRange(0, 0),
-                    new NumberRange(3, 6, 0, 2.0),
+                    new NumberRange(0, 200),
                     new NumberRange(300, 400),
                 )
             case ExtraEffectPresetShape.Explosion:
                 return new SpreadEffectData(
                     colorLookupTable,
                     sizeLookupTable,
-                    new NumberRange(0, 6, 0, 0.33),
-                    new NumberRange(3, 6, 0.50, 0.75),
+                    new NumberRange(0, 33),
+                    new NumberRange(66, 100),
                     new NumberRange(400, 600),
                     0.66
                 )
@@ -174,8 +160,8 @@ namespace extraEffects {
                 return new SpreadEffectData(
                     colorLookupTable,
                     sizeLookupTable,
-                    new NumberRange(0, 6, 0, 0.66),
-                    new NumberRange(4, 4, 0.33, 0.33),
+                    new NumberRange(0, 66),
+                    new NumberRange(33, 33),
                     new NumberRange(800, 1200),
                     0.75
                 )
@@ -183,7 +169,7 @@ namespace extraEffects {
                 return new SpreadEffectData(
                     colorLookupTable,
                     sizeLookupTable,
-                    new NumberRange(0, 0, 0, 1.0),
+                    new NumberRange(0, 100),
                     new NumberRange(0, 0),
                     new NumberRange(300, 600)
                 )
@@ -235,8 +221,8 @@ namespace extraEffects {
             resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2 * effectData.sizeScale)),
             diameter >= 50 ? Math.floor(particlesPerSecond * circleArea(diameter) / circleArea(50)) : particlesPerSecond,
             lifespan,
-            effectData.lifespan.resizedMin(diameter / 2),
-            effectData.lifespan.resizedMax(diameter / 2),
+            effectData.lifespan.min,
+            effectData.lifespan.max,
             effectData.spawnSpread.resizedMin(diameter / 2),
             effectData.spawnSpread.resizedMax(diameter / 2),
             effectData.lifespanSpread.resizedMin(diameter / 2),
@@ -281,8 +267,8 @@ namespace extraEffects {
             resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2 * effectData.sizeScale)),
             diameter >= 50 ? Math.floor(particlesPerSecond * circleArea(diameter) / circleArea(50)) : particlesPerSecond,
             lifespan,
-            effectData.lifespan.resizedMin(diameter / 2),
-            effectData.lifespan.resizedMax(diameter / 2),
+            effectData.lifespan.min,
+            effectData.lifespan.max,
             effectData.spawnSpread.resizedMin(diameter / 2),
             effectData.spawnSpread.resizedMax(diameter / 2),
             effectData.lifespanSpread.resizedMin(diameter / 2),
@@ -316,8 +302,8 @@ namespace extraEffects {
     //% block="custom effect set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier gravity $gravity decelerate after duration $tweenOutLifespanBreakpoint"
     //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
     //% sizeLookupTable.shadow="presetSizeTablePicker"
-    //% spawnSpread.shadow="pixelRangePicker"
-    //% lifespanSpread.shadow="pixelRangePicker"
+    //% spawnSpread.shadow="percentRangePicker"
+    //% lifespanSpread.shadow="percentRangePicker"
     //% lifespan.shadow="timeRangePicker"
     //% expandableArgumentMode="toggle"
     //% vx.min=-100 vx.max=100 vx.defl=0
