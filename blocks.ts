@@ -441,6 +441,48 @@ class SpreadEffectData {
         }
     }
 
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="min initial spread pct"
+    set minSpawnSpread(value: number) { this.spawnSpread.min = value }
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="min initial spread pct"
+    get minSpawnSpread(): number { return this.spawnSpread.min }
+
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="max initial spread pct"
+    set maxSpawnSpread(value: number) { this.spawnSpread.max = value }
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="max initial spread pct"
+    get maxSpawnSpread(): number { return this.spawnSpread.max }
+
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="min over time spread pct"
+    set minLifespanSpread(value: number) { this.lifespanSpread.min = value }
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="min over time spread pct"
+    get minLifespanSpread(): number { return this.lifespanSpread.min }
+
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="max over time spread pct"
+    set maxLifespanSpread(value: number) { this.lifespanSpread.max = value }
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="max over time spread pct"
+    get maxLifespanSpread(): number { return this.lifespanSpread.max }
+
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="min particle duration"
+    set minParticleLifespan(value: number) { this.lifespan.min = value }
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="min particle duration"
+    get minParticleLifespan(): number { return this.lifespan.min }
+
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="max particle duration"
+    set maxParticleLifespan(value: number) { this.lifespan.max = value }
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="max particle duration"
+    get maxParticleLifespan(): number { return this.lifespan.max }
+
     //% group="Advanced Data"
     //% block="set $this colors to $colorLookupTable"
     //% this.defl=myEffect
