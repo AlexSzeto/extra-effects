@@ -7,12 +7,15 @@ namespace extraEffects {
     let sineShiftPhase: number = 0
     let sineShiftLUT: Fx8[]
 
+    let spawnSpreadLUT: Fx8[]
+
     const NUM_SLICES = 90
-    const MAX_LUT_SLICES = 20
+    const MAX_LUT_SLICES = 30
     const MAX_TWEEN_SLICES = 20
     const TWEEN_PCT_PER_SLICE = 1.0 / MAX_TWEEN_SLICES
-    const TWEEN_OUT_MULTIPLIER = 90
+    const TWEEN_OUT_MULTIPLIER = 0.9
 
+    const fxTweenOutMultiplier = Fx8(TWEEN_OUT_MULTIPLIER)
     const fxOneHundred = Fx8(100)
     const galois = new Math.FastRandom()
 
@@ -50,16 +53,34 @@ namespace extraEffects {
         }
     }
 
-    /**
-     * Create a lookup table of values between two numbers
-     * @param min 
-     * @param max 
-     * @returns 
-     */
     function createNumberRangeLookupTable(min: number, max: number): Fx8[] {
         let table: Fx8[] = []
         for (let i = 0; i < MAX_LUT_SLICES; i++) {
             table.push(Fx8(min + (max - min) * i / MAX_LUT_SLICES))
+        }
+        return table
+    }
+
+    function createCircumferenceProbabilityLookupTable(min: number, max: number): Fx8[] {
+        let circumferences: number[] = []
+        let area: number = 0
+        let r: number = 0
+        let c: number = 0
+        const minArea = 2 * Math.PI * min
+        for(r=min; r<=max; r++) {
+            c = 2 * Math.PI * r
+            area += c - minArea
+            circumferences.push(area)
+        }
+        r = min
+        let table: Fx8[] = []
+        for (let i = 0; i < MAX_LUT_SLICES; i++) {
+            const percentageOfArea = i * area / MAX_LUT_SLICES
+            c = 0
+            while(c < circumferences.length && percentageOfArea > circumferences[c]) {
+                c++
+            }
+            table.push(Fx8(min + c))
         }
         return table
     }
@@ -120,20 +141,20 @@ namespace extraEffects {
             this.sizeLookupTable.reverse()
             this.sizeSlice = this.maxLifespan / this.sizeLookupTable.length
             this.tweenOutSlice = this.maxLifespan / MAX_TWEEN_SLICES
-            this.spawnSpreadLookupTable = createNumberRangeLookupTable(minSpawnSpread, maxSpawnSpread)
+            this.spawnSpreadLookupTable = createCircumferenceProbabilityLookupTable(minSpawnSpread, maxSpawnSpread)
             this.extraVX = Fx8(extraVX)
             this.extraVY = Fx8(extraVY)
             this.sineShiftRadius = Fx8(sineShiftRadius)
             this.extraVelocityPercentageMultiplierLookupTable = createNumberRangeLookupTable(minExtraVelocityPercentageMultiplier, maxExtraVelocityPercentageMultiplier)
             this.tweenOutAfterLifespanPastPercentage = 100 - tweenOutAfterLifespanPastPercentage
 
-            // simulate the spread distance lost from tweening out, and recompensate by increasing initial velocity
+            // simulate the spread distance lost from tweening out, and compensate by increasing initial velocity
             if(this.tweenOutAfterLifespanPastPercentage > 0) {
                 let tweenOutSpreadAsPercentageOfNormalVelocity = Math.floor((100 - this.tweenOutAfterLifespanPastPercentage) / 100.0 * MAX_TWEEN_SLICES) * TWEEN_PCT_PER_SLICE
                 const tweenOutSlices = Math.ceil(this.tweenOutAfterLifespanPastPercentage / 100.00 * MAX_TWEEN_SLICES)
                 let percentagePerSlice = TWEEN_PCT_PER_SLICE
                 for(let tweenOut = 0; tweenOut < tweenOutSlices; tweenOut++) {
-                    percentagePerSlice *= TWEEN_OUT_MULTIPLIER / 100.0
+                    percentagePerSlice *= TWEEN_OUT_MULTIPLIER
                     tweenOutSpreadAsPercentageOfNormalVelocity += percentagePerSlice
                 }
                 minLifespanSpread = Math.floor(minLifespanSpread / tweenOutSpreadAsPercentageOfNormalVelocity)
@@ -212,8 +233,8 @@ namespace extraEffects {
 
             while (p.lifespan < p.data) {
                 p.data -= this.tweenOutSlice
-                p.vx = Fx.div(Fx.mul(p.vx, Fx8(TWEEN_OUT_MULTIPLIER)), Fx8(100))
-                p.vy = Fx.div(Fx.mul(p.vy, Fx8(TWEEN_OUT_MULTIPLIER)), Fx8(100))
+                p.vx = Fx.mul(p.vx, fxTweenOutMultiplier)
+                p.vy = Fx.mul(p.vy, fxTweenOutMultiplier)
             }
         }
     }

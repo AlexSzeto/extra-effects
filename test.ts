@@ -14,7 +14,7 @@ for (let color = 0; color < 6; color++) {
             color,
             shape
         )
-        for (let diameter = 1; diameter <= 4; diameter++) {
+        for (let diameter = 1; diameter <= 6; diameter++) {
             effects.clearParticles(calibrationCenter)
             extraEffects.createSpreadEffectOnAnchor(
                 calibrationCenter,
@@ -23,7 +23,7 @@ for (let color = 0; color < 6; color++) {
                 diameter * 24,
                 300,
             )
-            for (let density = 0; density < 2; density++) {
+            for (let density = 0; density < 1; density++) {
                 extraEffects.createSpreadEffectAt(
                     sfx,
                     scene.screenWidth() / 2,
