@@ -303,7 +303,7 @@ namespace extraEffects {
      */
     //% group="Advanced Data" weight=100
     //% blockSetVariable=myEffect
-    //% block="custom effect set|colors to $colorLookupTable mono color $monoColor sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier gravity $gravity wave diameter $waveDiameter decelerate after duration $tweenOutLifespanBreakpoint"
+    //% block="custom effect set|colors to $colorLookupTable mono particle color $monoColor sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier gravity $gravity wave diameter $waveDiameter decelerate after duration $tweenOutLifespanBreakpoint"
     //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
     //% monoColor.shadow="toggleYesNo" monoColor.defl=false
     //% sizeLookupTable.shadow="presetSizeTablePicker"
@@ -514,9 +514,9 @@ class SpreadEffectData {
     }
 
     //% group="Advanced Data"
-    //% block="set $this mono color $monoColor"
-    //% this.defl=false
-    //% monoColor.shadow="toggleYesNo"
+    //% block="set $this mono particle color $monoColor"
+    //% this.defl=myEffect
+    //% monoColor.shadow="toggleYesNo" monoColor.defl=false
     public setSpreadEffectDataMonoColor(monoColor: boolean): void {
         this.monoColor = monoColor
     }
