@@ -1,4 +1,4 @@
-// meta={"simUrl":"https://trg-arcade.userpxt.io/v1.12.36/---simulator","cdnUrl":"https://pxt.azureedge.net","version":"3.0.0","target":"arcade","targetVersion":"1.12.36","repo":"alexszeto/extra-effects"}
+// meta={"simUrl":"https://trg-arcade.userpxt.io/v1.12.36/---simulator","cdnUrl":"https://pxt.azureedge.net","version":"3.0.1","target":"arcade","targetVersion":"1.12.36","repo":"alexszeto/extra-effects"}
 // total=1360504 new=12.01% cached=82.49% other=5.50%
 (function (ectx) {
 'use strict';
@@ -453,7 +453,7 @@ const pxsim_pxtrt = pxsim.pxtrt;
 const pxsim_numops = pxsim.numops;
 
 
-function _main___P293850(s) {
+function _main___P299068(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -931,7 +931,7 @@ switch (step) {
     r0 = pxsim_Array__push(s.tmp_6, 13);
     r0 = pxsim_Array__push(s.tmp_6, 11);
     r0 = pxsim_Array__push(s.tmp_1, s.tmp_6);
-    globals.PRESET_COLOR_LUT___221918 = (s.tmp_1);
+    globals.PRESET_COLOR_LUT___298293 = (s.tmp_1);
     r0 = pxsim_Array__mk();
     s.tmp_0 = r0;
     r0 = pxsim_Array__push(s.tmp_0, 6);
@@ -980,7 +980,7 @@ switch (step) {
     r0 = pxsim_Array__push(s.tmp_4, 1);
     r0 = pxsim_Array__push(s.tmp_4, 1);
     r0 = pxsim_Array__push(s.tmp_1, s.tmp_4);
-    globals.PRESET_SIZE_LUT___221960 = (s.tmp_1);
+    globals.PRESET_SIZE_LUT___298335 = (s.tmp_1);
     s.tmp_0 = sprites_create__P73830_mk(s);
     r0 = pxsim.image.create(1, 1);
     s.tmp_0.arg0 = r0;
@@ -995,34 +995,34 @@ switch (step) {
     r0 = pxsim_Array__mk();
     s.tmp_1 = r0;
     r0 = pxsim_Array__push(s.tmp_1, 1);
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_2 = r0;
-    s.tmp_3 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_3 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_3.arg0 = s.tmp_2;
     s.tmp_3.arg1 = 100;
     s.tmp_3.arg2 = 100;
     s.callLocIdx = 191; s.pc = 47; return s.tmp_3;
   case 47:
     r0 = s.retval;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_4 = r0;
-    s.tmp_5 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_5 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_5.arg0 = s.tmp_4;
     s.tmp_5.arg1 = 0;
     s.tmp_5.arg2 = 0;
     s.callLocIdx = 192; s.pc = 48; return s.tmp_5;
   case 48:
     r0 = s.retval;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_6 = r0;
-    s.tmp_7 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_7 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_7.arg0 = s.tmp_6;
     s.tmp_7.arg1 = 100;
     s.tmp_7.arg2 = 100;
     s.callLocIdx = 193; s.pc = 49; return s.tmp_7;
   case 49:
     r0 = s.retval;
-    s.tmp_8 = extraEffects_createCustomSpreadEffectData__P222319_mk(s);
+    s.tmp_8 = extraEffects_createCustomSpreadEffectData__P298694_mk(s);
     s.tmp_8.arg0 = s.tmp_0;
     s.tmp_8.arg1 = true;
     s.tmp_8.arg2 = s.tmp_1;
@@ -1051,7 +1051,7 @@ switch (step) {
     s.tmp_0 = r0;
     r0 = pxsim_numops_toBoolDecr(s.tmp_0);
     if (!r0) { step = 7; continue; }
-    s.tmp_1 = extraEffects_createFullPresetsSpreadEffectData__P222012_mk(s);
+    s.tmp_1 = extraEffects_createFullPresetsSpreadEffectData__P298387_mk(s);
     s.tmp_1.arg0 = s.color___223164;
     s.tmp_1.arg1 = s.shape___223168;
     s.callLocIdx = 195; s.pc = 51; return s.tmp_1;
@@ -1069,7 +1069,7 @@ switch (step) {
     s.callLocIdx = 196; s.pc = 52; return s.tmp_1;
   case 52:
     r0 = s.retval;
-    s.tmp_0 = extraEffects_createSpreadEffectOnAnchor__P222241_mk(s);
+    s.tmp_0 = extraEffects_createSpreadEffectOnAnchor__P298616_mk(s);
     s.tmp_0.arg0 = globals.calibrationCenter___223148;
     s.tmp_0.arg1 = globals.calibrationEffect___223154;
     s.tmp_0.arg2 = -1;
@@ -1085,7 +1085,7 @@ switch (step) {
     s.tmp_0 = r0;
     r0 = pxsim_numops_toBoolDecr(s.tmp_0);
     if (!r0) { step = 5; continue; }
-    s.tmp_1 = extraEffects_createSpreadEffectAt__P222148_mk(s);
+    s.tmp_1 = extraEffects_createSpreadEffectAt__P298523_mk(s);
     s.tmp_1.arg0 = globals.sfx___223146;
     r0 = pxsim_ImageMethods.width(globals.screen___73587);
     s.tmp_2 = r0;
@@ -1135,13 +1135,13 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-_main___P293850.info = {"start":0,"length":0,"line":0,"column":0,"endLine":0,"endColumn":0,"fileName":"main.ts","functionName":"<main>","argumentNames":[]}
-_main___P293850.continuations = [  ]
+_main___P299068.info = {"start":0,"length":0,"line":0,"column":0,"endLine":0,"endColumn":0,"fileName":"main.ts","functionName":"<main>","argumentNames":[]}
+_main___P299068.continuations = [  ]
 
-function _main___P293850_mk(s) {
+function _main___P299068_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: _main___P293850, depth: s.depth + 1,
+        parent: s, fn: _main___P299068, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -1741,7 +1741,7 @@ function scene_screenWidth__P74436_mk(s) {
 
 
 
-function extraEffects_createSpreadEffectAt__P222148(s) {
+function extraEffects_createSpreadEffectAt__P298523(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -1769,7 +1769,7 @@ switch (step) {
     r0 = pxsim_numops_toBoolDecr(s.tmp_1);
     if (!r0) { step = 1; continue; }
     s.tmp_4 = r0 = s.arg5;
-    s.tmp_6 = extraEffects_circleArea__P222138_mk(s);
+    s.tmp_6 = extraEffects_circleArea__P298513_mk(s);
     s.tmp_7 = Math_min__P71686_mk(s);
     s.tmp_7.arg0 = 100;
     s.tmp_7.arg1 = s.arg4;
@@ -1783,7 +1783,7 @@ switch (step) {
     s.tmp_5 = r0;
     r0 = (s.tmp_4 * s.tmp_5);
     s.tmp_3 = r0;
-    s.tmp_9 = extraEffects_circleArea__P222138_mk(s);
+    s.tmp_9 = extraEffects_circleArea__P298513_mk(s);
     s.tmp_9.arg0 = 50;
     s.callLocIdx = 171; s.pc = 5; return s.tmp_9;
   case 5:
@@ -1808,7 +1808,7 @@ switch (step) {
     s.tmp_12 = r0;
     r0 = pxsim_Boolean__bang(s.tmp_12);
     s.tmp_11.arg2 = r0;
-    s.tmp_14 = extraEffects_resizeTable__P222104_mk(s);
+    s.tmp_14 = extraEffects_resizeTable__P298479_mk(s);
     r0 = s.arg0.fields["sizeLookupTable"];
     s.tmp_14.arg0 = r0;
     r0 = (s.arg4 / 2);
@@ -1831,7 +1831,7 @@ switch (step) {
     r0 = s.arg0.fields["lifespan"];
     r0 = r0.fields["max"];
     s.tmp_11.arg7 = r0;
-    s.tmp_18 = extraEffects_NumberRange_resizedMin__P221967_mk(s);
+    s.tmp_18 = extraEffects_NumberRange_resizedMin__P298342_mk(s);
     r0 = s.arg0.fields["spawnSpread"];
     s.tmp_18.arg0 = r0;
     r0 = (s.arg4 / 2);
@@ -1840,7 +1840,7 @@ switch (step) {
   case 8:
     r0 = s.retval;
     s.tmp_11.arg8 = r0;
-    s.tmp_19 = extraEffects_NumberRange_resizedMax__P221968_mk(s);
+    s.tmp_19 = extraEffects_NumberRange_resizedMax__P298343_mk(s);
     r0 = s.arg0.fields["spawnSpread"];
     s.tmp_19.arg0 = r0;
     r0 = (s.arg4 / 2);
@@ -1849,7 +1849,7 @@ switch (step) {
   case 9:
     r0 = s.retval;
     s.tmp_11.arg9 = r0;
-    s.tmp_20 = extraEffects_NumberRange_resizedMin__P221967_mk(s);
+    s.tmp_20 = extraEffects_NumberRange_resizedMin__P298342_mk(s);
     r0 = s.arg0.fields["lifespanSpread"];
     s.tmp_20.arg0 = r0;
     r0 = (s.arg4 / 2);
@@ -1858,7 +1858,7 @@ switch (step) {
   case 10:
     r0 = s.retval;
     s.tmp_11.arg10 = r0;
-    s.tmp_21 = extraEffects_NumberRange_resizedMax__P221968_mk(s);
+    s.tmp_21 = extraEffects_NumberRange_resizedMax__P298343_mk(s);
     r0 = s.arg0.fields["lifespanSpread"];
     s.tmp_21.arg0 = r0;
     r0 = (s.arg4 / 2);
@@ -1890,12 +1890,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects_createSpreadEffectAt__P222148.info = {"start":6953,"length":1292,"line":210,"column":4,"endLine":239,"endColumn":5,"fileName":"blocks.ts","functionName":"createSpreadEffectAt","argumentNames":["effectData","x","y","lifespan","diameter","particlesPerSecond"]}
+extraEffects_createSpreadEffectAt__P298523.info = {"start":6953,"length":1292,"line":210,"column":4,"endLine":239,"endColumn":5,"fileName":"blocks.ts","functionName":"createSpreadEffectAt","argumentNames":["effectData","x","y","lifespan","diameter","particlesPerSecond"]}
 
-function extraEffects_createSpreadEffectAt__P222148_mk(s) {
+function extraEffects_createSpreadEffectAt__P298523_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects_createSpreadEffectAt__P222148, depth: s.depth + 1,
+        parent: s, fn: extraEffects_createSpreadEffectAt__P298523, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -1931,7 +1931,7 @@ function extraEffects_createSpreadEffectAt__P222148_mk(s) {
 
 
 
-function extraEffects_NumberRange_resizedMax__P221968(s) {
+function extraEffects_NumberRange_resizedMax__P298343(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -1947,7 +1947,7 @@ switch (step) {
       s.lambdaArgs = null;
     }
     r0 = s.arg0;
-    if (!checkSubtype(r0, extraEffects_NumberRange__C221966_VT)) failedCast(r0);
+    if (!checkSubtype(r0, extraEffects_NumberRange__C298341_VT)) failedCast(r0);
     s.tmp_0 = Math_max__P71685_mk(s);
     s.tmp_0.arg0 = 1;
     r0 = s.arg0.fields["max"];
@@ -1962,12 +1962,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects_NumberRange_resizedMax__P221968.info = {"start":1402,"length":98,"line":63,"column":8,"endLine":65,"endColumn":9,"fileName":"blocks.ts","functionName":"resizedMax","argumentNames":["this","size"]}
+extraEffects_NumberRange_resizedMax__P298343.info = {"start":1402,"length":98,"line":63,"column":8,"endLine":65,"endColumn":9,"fileName":"blocks.ts","functionName":"resizedMax","argumentNames":["this","size"]}
 
-function extraEffects_NumberRange_resizedMax__P221968_mk(s) {
+function extraEffects_NumberRange_resizedMax__P298343_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects_NumberRange_resizedMax__P221968, depth: s.depth + 1,
+        parent: s, fn: extraEffects_NumberRange_resizedMax__P298343, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -2024,7 +2024,7 @@ function Math_max__P71685_mk(s) {
 
 
 
-function extraEffects_NumberRange_resizedMin__P221967(s) {
+function extraEffects_NumberRange_resizedMin__P298342(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -2040,7 +2040,7 @@ switch (step) {
       s.lambdaArgs = null;
     }
     r0 = s.arg0;
-    if (!checkSubtype(r0, extraEffects_NumberRange__C221966_VT)) failedCast(r0);
+    if (!checkSubtype(r0, extraEffects_NumberRange__C298341_VT)) failedCast(r0);
     s.tmp_0 = Math_max__P71685_mk(s);
     s.tmp_0.arg0 = 1;
     r0 = s.arg0.fields["min"];
@@ -2055,12 +2055,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects_NumberRange_resizedMin__P221967.info = {"start":1294,"length":98,"line":59,"column":8,"endLine":61,"endColumn":9,"fileName":"blocks.ts","functionName":"resizedMin","argumentNames":["this","size"]}
+extraEffects_NumberRange_resizedMin__P298342.info = {"start":1294,"length":98,"line":59,"column":8,"endLine":61,"endColumn":9,"fileName":"blocks.ts","functionName":"resizedMin","argumentNames":["this","size"]}
 
-function extraEffects_NumberRange_resizedMin__P221967_mk(s) {
+function extraEffects_NumberRange_resizedMin__P298342_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects_NumberRange_resizedMin__P221967, depth: s.depth + 1,
+        parent: s, fn: extraEffects_NumberRange_resizedMin__P298342, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -2117,7 +2117,7 @@ function Math_min__P71686_mk(s) {
 
 
 
-function extraEffects_circleArea__P222138(s) {
+function extraEffects_circleArea__P298513(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -2127,28 +2127,28 @@ if (yieldSteps-- < 0 && maybeYield(s, step, r0) || runtime !== pxsim.runtime) re
 switch (step) {
   case 0:
 
-    s.radius___222140 = undefined;
+    s.radius___298515 = undefined;
     if (s.lambdaArgs) {
       s.arg0 = (s.lambdaArgs[0]);
       s.lambdaArgs = null;
     }
     r0 = (s.arg0 / 2);
-    s.radius___222140 = (r0);
-    r0 = (3.141592653589793 * s.radius___222140);
+    s.radius___298515 = (r0);
+    r0 = (3.141592653589793 * s.radius___298515);
     s.tmp_0 = r0;
-    r0 = (s.tmp_0 * s.radius___222140);
+    r0 = (s.tmp_0 * s.radius___298515);
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects_circleArea__P222138.info = {"start":5735,"length":130,"line":187,"column":4,"endLine":190,"endColumn":5,"fileName":"blocks.ts","functionName":"circleArea","argumentNames":["diameter"]}
+extraEffects_circleArea__P298513.info = {"start":5735,"length":130,"line":187,"column":4,"endLine":190,"endColumn":5,"fileName":"blocks.ts","functionName":"circleArea","argumentNames":["diameter"]}
 
-function extraEffects_circleArea__P222138_mk(s) {
+function extraEffects_circleArea__P298513_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects_circleArea__P222138, depth: s.depth + 1,
+        parent: s, fn: extraEffects_circleArea__P298513, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
-  radius___222140: undefined,
+  radius___298515: undefined,
   arg0: undefined,
 } }
 
@@ -2156,7 +2156,7 @@ function extraEffects_circleArea__P222138_mk(s) {
 
 
 
-function extraEffects_resizeTable__P222104(s) {
+function extraEffects_resizeTable__P298479(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -2166,8 +2166,8 @@ if (yieldSteps-- < 0 && maybeYield(s, step, r0) || runtime !== pxsim.runtime) re
 switch (step) {
   case 0:
 
-    s.tableMax___222107 = undefined;
-    s.rescaleFactor___222119 = undefined;
+    s.tableMax___298482 = undefined;
+    s.rescaleFactor___298494 = undefined;
     if (s.lambdaArgs) {
       s.arg0 = (s.lambdaArgs[0]);
       s.arg1 = (s.lambdaArgs[1]);
@@ -2175,24 +2175,24 @@ switch (step) {
     }
     s.tmp_0 = helpers_arrayReduce__P71667_mk(s);
     s.tmp_0.arg0 = s.arg0;
-    s.tmp_0.arg1 = tableMax_inline__P222111;
+    s.tmp_0.arg1 = tableMax_inline__P298486;
     s.tmp_0.arg2 = 1;
     s.callLocIdx = 165; s.pc = 3; return s.tmp_0;
   case 3:
     r0 = s.retval;
-    s.tableMax___222107 = (r0);
-    r0 = (s.arg1 / s.tableMax___222107);
-    s.rescaleFactor___222119 = (r0);
-    r0 = (s.rescaleFactor___222119 < 1);
+    s.tableMax___298482 = (r0);
+    r0 = (s.arg1 / s.tableMax___298482);
+    s.rescaleFactor___298494 = (r0);
+    r0 = (s.rescaleFactor___298494 < 1);
     s.tmp_0 = r0;
     r0 = pxsim_numops_toBoolDecr(s.tmp_0);
     if (!r0) { step = 1; continue; }
     r0 = s.arg0;
     { step = 2; continue; }
   case 1:
-    r0 = pxsim_pxtcore_mkAction(1, extraEffects_resizeTable_inline__P222128);
+    r0 = pxsim_pxtcore_mkAction(1, extraEffects_resizeTable_inline__P298503);
     s.tmp_1 = r0;
-    r0 = pxsim_pxtrt_stclo(s.tmp_1, 0, s.rescaleFactor___222119);
+    r0 = pxsim_pxtrt_stclo(s.tmp_1, 0, s.rescaleFactor___298494);
     s.tmp_2 = helpers_arrayMap__P71661_mk(s);
     s.tmp_2.arg0 = s.arg0;
     s.tmp_2.arg1 = s.tmp_1;
@@ -2206,19 +2206,19 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects_resizeTable__P222104.info = {"start":5378,"length":351,"line":179,"column":4,"endLine":185,"endColumn":5,"fileName":"blocks.ts","functionName":"resizeTable","argumentNames":["table","newMax"]}
+extraEffects_resizeTable__P298479.info = {"start":5378,"length":351,"line":179,"column":4,"endLine":185,"endColumn":5,"fileName":"blocks.ts","functionName":"resizeTable","argumentNames":["table","newMax"]}
 
-function extraEffects_resizeTable__P222104_mk(s) {
+function extraEffects_resizeTable__P298479_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects_resizeTable__P222104, depth: s.depth + 1,
+        parent: s, fn: extraEffects_resizeTable__P298479, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
   tmp_2: undefined,
   tmp_3: undefined,
-  tableMax___222107: undefined,
-  rescaleFactor___222119: undefined,
+  tableMax___298482: undefined,
+  rescaleFactor___298494: undefined,
   arg0: undefined,
   arg1: undefined,
 } }
@@ -2227,7 +2227,7 @@ function extraEffects_resizeTable__P222104_mk(s) {
 
 
 
-function tableMax_inline__P222111(s) {
+function tableMax_inline__P298486(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -2257,12 +2257,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-tableMax_inline__P222111.info = {"start":5482,"length":38,"line":180,"column":38,"endLine":180,"endColumn":76,"fileName":"blocks.ts","functionName":"inline","argumentNames":["max","curr"]}
+tableMax_inline__P298486.info = {"start":5482,"length":38,"line":180,"column":38,"endLine":180,"endColumn":76,"fileName":"blocks.ts","functionName":"inline","argumentNames":["max","curr"]}
 
-function tableMax_inline__P222111_mk(s) {
+function tableMax_inline__P298486_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: tableMax_inline__P222111, depth: s.depth + 1,
+        parent: s, fn: tableMax_inline__P298486, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -2274,7 +2274,7 @@ function tableMax_inline__P222111_mk(s) {
 
 
 
-function extraEffects_resizeTable_inline__P222128(s) {
+function extraEffects_resizeTable_inline__P298503(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -2311,12 +2311,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects_resizeTable_inline__P222128.info = {"start":5650,"length":72,"line":184,"column":24,"endLine":184,"endColumn":96,"fileName":"blocks.ts","functionName":"inline","argumentNames":["value"]}
+extraEffects_resizeTable_inline__P298503.info = {"start":5650,"length":72,"line":184,"column":24,"endLine":184,"endColumn":96,"fileName":"blocks.ts","functionName":"inline","argumentNames":["value"]}
 
-function extraEffects_resizeTable_inline__P222128_mk(s) {
+function extraEffects_resizeTable_inline__P298503_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects_resizeTable_inline__P222128, depth: s.depth + 1,
+        parent: s, fn: extraEffects_resizeTable_inline__P298503, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -8231,7 +8231,7 @@ function Fx_sub__P71714_mk(s) {
 
 
 
-function extraEffects_createSpreadEffectOnAnchor__P222241(s) {
+function extraEffects_createSpreadEffectOnAnchor__P298616(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -8254,7 +8254,7 @@ switch (step) {
     r0 = pxsim_numops_toBoolDecr(s.tmp_0);
     if (!r0) { step = 1; continue; }
     s.tmp_3 = r0 = s.arg4;
-    s.tmp_5 = extraEffects_circleArea__P222138_mk(s);
+    s.tmp_5 = extraEffects_circleArea__P298513_mk(s);
     s.tmp_6 = Math_min__P71686_mk(s);
     s.tmp_6.arg0 = 100;
     s.tmp_6.arg1 = s.arg3;
@@ -8268,7 +8268,7 @@ switch (step) {
     s.tmp_4 = r0;
     r0 = (s.tmp_3 * s.tmp_4);
     s.tmp_2 = r0;
-    s.tmp_8 = extraEffects_circleArea__P222138_mk(s);
+    s.tmp_8 = extraEffects_circleArea__P298513_mk(s);
     s.tmp_8.arg0 = 50;
     s.callLocIdx = 180; s.pc = 5; return s.tmp_8;
   case 5:
@@ -8293,7 +8293,7 @@ switch (step) {
     s.tmp_11 = r0;
     r0 = pxsim_Boolean__bang(s.tmp_11);
     s.tmp_10.arg2 = r0;
-    s.tmp_13 = extraEffects_resizeTable__P222104_mk(s);
+    s.tmp_13 = extraEffects_resizeTable__P298479_mk(s);
     r0 = s.arg1.fields["sizeLookupTable"];
     s.tmp_13.arg0 = r0;
     r0 = (s.arg3 / 2);
@@ -8316,7 +8316,7 @@ switch (step) {
     r0 = s.arg1.fields["lifespan"];
     r0 = r0.fields["max"];
     s.tmp_10.arg7 = r0;
-    s.tmp_17 = extraEffects_NumberRange_resizedMin__P221967_mk(s);
+    s.tmp_17 = extraEffects_NumberRange_resizedMin__P298342_mk(s);
     r0 = s.arg1.fields["spawnSpread"];
     s.tmp_17.arg0 = r0;
     r0 = (s.arg3 / 2);
@@ -8325,7 +8325,7 @@ switch (step) {
   case 8:
     r0 = s.retval;
     s.tmp_10.arg8 = r0;
-    s.tmp_18 = extraEffects_NumberRange_resizedMax__P221968_mk(s);
+    s.tmp_18 = extraEffects_NumberRange_resizedMax__P298343_mk(s);
     r0 = s.arg1.fields["spawnSpread"];
     s.tmp_18.arg0 = r0;
     r0 = (s.arg3 / 2);
@@ -8334,7 +8334,7 @@ switch (step) {
   case 9:
     r0 = s.retval;
     s.tmp_10.arg9 = r0;
-    s.tmp_19 = extraEffects_NumberRange_resizedMin__P221967_mk(s);
+    s.tmp_19 = extraEffects_NumberRange_resizedMin__P298342_mk(s);
     r0 = s.arg1.fields["lifespanSpread"];
     s.tmp_19.arg0 = r0;
     r0 = (s.arg3 / 2);
@@ -8343,7 +8343,7 @@ switch (step) {
   case 10:
     r0 = s.retval;
     s.tmp_10.arg10 = r0;
-    s.tmp_20 = extraEffects_NumberRange_resizedMax__P221968_mk(s);
+    s.tmp_20 = extraEffects_NumberRange_resizedMax__P298343_mk(s);
     r0 = s.arg1.fields["lifespanSpread"];
     s.tmp_20.arg0 = r0;
     r0 = (s.arg3 / 2);
@@ -8375,12 +8375,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects_createSpreadEffectOnAnchor__P222241.info = {"start":9199,"length":1276,"line":258,"column":4,"endLine":286,"endColumn":5,"fileName":"blocks.ts","functionName":"createSpreadEffectOnAnchor","argumentNames":["sprite","effectData","lifespan","diameter","particlesPerSecond"]}
+extraEffects_createSpreadEffectOnAnchor__P298616.info = {"start":9199,"length":1276,"line":258,"column":4,"endLine":286,"endColumn":5,"fileName":"blocks.ts","functionName":"createSpreadEffectOnAnchor","argumentNames":["sprite","effectData","lifespan","diameter","particlesPerSecond"]}
 
-function extraEffects_createSpreadEffectOnAnchor__P222241_mk(s) {
+function extraEffects_createSpreadEffectOnAnchor__P298616_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects_createSpreadEffectOnAnchor__P222241, depth: s.depth + 1,
+        parent: s, fn: extraEffects_createSpreadEffectOnAnchor__P298616, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -8631,7 +8631,7 @@ function helpers_arrayFilter__P71665_mk(s) {
 
 
 
-function extraEffects_createFullPresetsSpreadEffectData__P222012(s) {
+function extraEffects_createFullPresetsSpreadEffectData__P298387(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -8646,8 +8646,8 @@ switch (step) {
       s.arg1 = (s.lambdaArgs[1]);
       s.lambdaArgs = null;
     }
-    s.tmp_0 = extraEffects___createShapePresetSpreadEffectData__P222016_mk(s);
-    r0 = pxsim_Array__getAt(globals.PRESET_COLOR_LUT___221918, s.arg0);
+    s.tmp_0 = extraEffects___createShapePresetSpreadEffectData__P298391_mk(s);
+    r0 = pxsim_Array__getAt(globals.PRESET_COLOR_LUT___298293, s.arg0);
     s.tmp_0.arg0 = r0;
     s.tmp_0.arg1 = s.arg1;
     s.callLocIdx = 148; s.pc = 1; return s.tmp_0;
@@ -8656,12 +8656,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects_createFullPresetsSpreadEffectData__P222012.info = {"start":2746,"length":284,"line":103,"column":4,"endLine":111,"endColumn":5,"fileName":"blocks.ts","functionName":"createFullPresetsSpreadEffectData","argumentNames":["color","shape"]}
+extraEffects_createFullPresetsSpreadEffectData__P298387.info = {"start":2746,"length":284,"line":103,"column":4,"endLine":111,"endColumn":5,"fileName":"blocks.ts","functionName":"createFullPresetsSpreadEffectData","argumentNames":["color","shape"]}
 
-function extraEffects_createFullPresetsSpreadEffectData__P222012_mk(s) {
+function extraEffects_createFullPresetsSpreadEffectData__P298387_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects_createFullPresetsSpreadEffectData__P222012, depth: s.depth + 1,
+        parent: s, fn: extraEffects_createFullPresetsSpreadEffectData__P298387, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   arg0: undefined,
@@ -8672,7 +8672,7 @@ function extraEffects_createFullPresetsSpreadEffectData__P222012_mk(s) {
 
 
 
-function extraEffects_createPresetColorTable__P222018(s) {
+function extraEffects_createPresetColorTable__P298393(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -8686,16 +8686,16 @@ switch (step) {
       s.arg0 = (s.lambdaArgs[0]);
       s.lambdaArgs = null;
     }
-    r0 = pxsim_Array__getAt(globals.PRESET_COLOR_LUT___221918, s.arg0);
+    r0 = pxsim_Array__getAt(globals.PRESET_COLOR_LUT___298293, s.arg0);
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects_createPresetColorTable__P222018.info = {"start":14154,"length":126,"line":361,"column":4,"endLine":363,"endColumn":5,"fileName":"blocks.ts","functionName":"createPresetColorTable","argumentNames":["color"]}
+extraEffects_createPresetColorTable__P298393.info = {"start":14163,"length":126,"line":361,"column":4,"endLine":363,"endColumn":5,"fileName":"blocks.ts","functionName":"createPresetColorTable","argumentNames":["color"]}
 
-function extraEffects_createPresetColorTable__P222018_mk(s) {
+function extraEffects_createPresetColorTable__P298393_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects_createPresetColorTable__P222018, depth: s.depth + 1,
+        parent: s, fn: extraEffects_createPresetColorTable__P298393, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   arg0: undefined,
 } }
@@ -8704,7 +8704,7 @@ function extraEffects_createPresetColorTable__P222018_mk(s) {
 
 
 
-function extraEffects___createShapePresetSpreadEffectData__P222016(s) {
+function extraEffects___createShapePresetSpreadEffectData__P298391(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -8714,14 +8714,14 @@ if (yieldSteps-- < 0 && maybeYield(s, step, r0) || runtime !== pxsim.runtime) re
 switch (step) {
   case 0:
 
-    s.sizeLookupTable___222030 = undefined;
+    s.sizeLookupTable___298405 = undefined;
     if (s.lambdaArgs) {
       s.arg0 = (s.lambdaArgs[0]);
       s.arg1 = (s.lambdaArgs[1]);
       s.lambdaArgs = null;
     }
-    r0 = pxsim_Array__getAt(globals.PRESET_SIZE_LUT___221960, s.arg1);
-    s.sizeLookupTable___222030 = (r0);
+    r0 = pxsim_Array__getAt(globals.PRESET_SIZE_LUT___298335, s.arg1);
+    s.sizeLookupTable___298405 = (r0);
     s.tmp_0 = r0 = s.arg1;
     r0 = pxsim_pxtcore.switch_eq(0, s.tmp_0);
     if (r0) { step = 1; continue; }
@@ -8734,39 +8734,39 @@ switch (step) {
     r0 = s.tmp_0;
     { step = 5; continue; }
   case 1:
-    r0 = pxsim_pxtcore_mkClassInstance(SpreadEffectData__C222045_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(SpreadEffectData__C298420_VT);
     s.tmp_1 = r0;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_2 = r0;
-    s.tmp_3 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_3 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_3.arg0 = s.tmp_2;
     s.tmp_3.arg1 = 0;
     s.tmp_3.arg2 = 30;
     s.callLocIdx = 149; s.pc = 7; return s.tmp_3;
   case 7:
     r0 = s.retval;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_4 = r0;
-    s.tmp_5 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_5 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_5.arg0 = s.tmp_4;
     s.tmp_5.arg1 = 20;
     s.tmp_5.arg2 = 100;
     s.callLocIdx = 150; s.pc = 8; return s.tmp_5;
   case 8:
     r0 = s.retval;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_6 = r0;
-    s.tmp_7 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_7 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_7.arg0 = s.tmp_6;
     s.tmp_7.arg1 = 300;
     s.tmp_7.arg2 = 400;
     s.callLocIdx = 151; s.pc = 9; return s.tmp_7;
   case 9:
     r0 = s.retval;
-    s.tmp_8 = SpreadEffectData_constructor__P222064_mk(s);
+    s.tmp_8 = SpreadEffectData_constructor__P298439_mk(s);
     s.tmp_8.arg0 = s.tmp_1;
     s.tmp_8.arg1 = s.arg0;
-    s.tmp_8.arg2 = s.sizeLookupTable___222030;
+    s.tmp_8.arg2 = s.sizeLookupTable___298405;
     s.tmp_8.arg3 = s.tmp_2;
     s.tmp_8.arg4 = s.tmp_4;
     s.tmp_8.arg5 = s.tmp_6;
@@ -8784,39 +8784,39 @@ switch (step) {
     r0 = s.tmp_1;
     { step = 6; continue; }
   case 2:
-    r0 = pxsim_pxtcore_mkClassInstance(SpreadEffectData__C222045_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(SpreadEffectData__C298420_VT);
     s.tmp_9 = r0;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_10 = r0;
-    s.tmp_11 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_11 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_11.arg0 = s.tmp_10;
     s.tmp_11.arg1 = 0;
     s.tmp_11.arg2 = 40;
     s.callLocIdx = 153; s.pc = 11; return s.tmp_11;
   case 11:
     r0 = s.retval;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_12 = r0;
-    s.tmp_13 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_13 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_13.arg0 = s.tmp_12;
     s.tmp_13.arg1 = 50;
     s.tmp_13.arg2 = 80;
     s.callLocIdx = 154; s.pc = 12; return s.tmp_13;
   case 12:
     r0 = s.retval;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_14 = r0;
-    s.tmp_15 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_15 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_15.arg0 = s.tmp_14;
     s.tmp_15.arg1 = 400;
     s.tmp_15.arg2 = 600;
     s.callLocIdx = 155; s.pc = 13; return s.tmp_15;
   case 13:
     r0 = s.retval;
-    s.tmp_16 = SpreadEffectData_constructor__P222064_mk(s);
+    s.tmp_16 = SpreadEffectData_constructor__P298439_mk(s);
     s.tmp_16.arg0 = s.tmp_9;
     s.tmp_16.arg1 = s.arg0;
-    s.tmp_16.arg2 = s.sizeLookupTable___222030;
+    s.tmp_16.arg2 = s.sizeLookupTable___298405;
     s.tmp_16.arg3 = s.tmp_10;
     s.tmp_16.arg4 = s.tmp_12;
     s.tmp_16.arg5 = s.tmp_14;
@@ -8834,39 +8834,39 @@ switch (step) {
     r0 = s.tmp_9;
     { step = 6; continue; }
   case 3:
-    r0 = pxsim_pxtcore_mkClassInstance(SpreadEffectData__C222045_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(SpreadEffectData__C298420_VT);
     s.tmp_17 = r0;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_18 = r0;
-    s.tmp_19 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_19 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_19.arg0 = s.tmp_18;
     s.tmp_19.arg1 = 0;
     s.tmp_19.arg2 = 50;
     s.callLocIdx = 157; s.pc = 15; return s.tmp_19;
   case 15:
     r0 = s.retval;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_20 = r0;
-    s.tmp_21 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_21 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_21.arg0 = s.tmp_20;
     s.tmp_21.arg1 = 33;
     s.tmp_21.arg2 = 33;
     s.callLocIdx = 158; s.pc = 16; return s.tmp_21;
   case 16:
     r0 = s.retval;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_22 = r0;
-    s.tmp_23 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_23 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_23.arg0 = s.tmp_22;
     s.tmp_23.arg1 = 800;
     s.tmp_23.arg2 = 1200;
     s.callLocIdx = 159; s.pc = 17; return s.tmp_23;
   case 17:
     r0 = s.retval;
-    s.tmp_24 = SpreadEffectData_constructor__P222064_mk(s);
+    s.tmp_24 = SpreadEffectData_constructor__P298439_mk(s);
     s.tmp_24.arg0 = s.tmp_17;
     s.tmp_24.arg1 = s.arg0;
-    s.tmp_24.arg2 = s.sizeLookupTable___222030;
+    s.tmp_24.arg2 = s.sizeLookupTable___298405;
     s.tmp_24.arg3 = s.tmp_18;
     s.tmp_24.arg4 = s.tmp_20;
     s.tmp_24.arg5 = s.tmp_22;
@@ -8884,39 +8884,39 @@ switch (step) {
     r0 = s.tmp_17;
     { step = 6; continue; }
   case 4:
-    r0 = pxsim_pxtcore_mkClassInstance(SpreadEffectData__C222045_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(SpreadEffectData__C298420_VT);
     s.tmp_25 = r0;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_26 = r0;
-    s.tmp_27 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_27 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_27.arg0 = s.tmp_26;
     s.tmp_27.arg1 = 0;
     s.tmp_27.arg2 = 100;
     s.callLocIdx = 161; s.pc = 19; return s.tmp_27;
   case 19:
     r0 = s.retval;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_28 = r0;
-    s.tmp_29 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_29 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_29.arg0 = s.tmp_28;
     s.tmp_29.arg1 = 0;
     s.tmp_29.arg2 = 0;
     s.callLocIdx = 162; s.pc = 20; return s.tmp_29;
   case 20:
     r0 = s.retval;
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_30 = r0;
-    s.tmp_31 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_31 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_31.arg0 = s.tmp_30;
     s.tmp_31.arg1 = 300;
     s.tmp_31.arg2 = 600;
     s.callLocIdx = 163; s.pc = 21; return s.tmp_31;
   case 21:
     r0 = s.retval;
-    s.tmp_32 = SpreadEffectData_constructor__P222064_mk(s);
+    s.tmp_32 = SpreadEffectData_constructor__P298439_mk(s);
     s.tmp_32.arg0 = s.tmp_25;
     s.tmp_32.arg1 = s.arg0;
-    s.tmp_32.arg2 = s.sizeLookupTable___222030;
+    s.tmp_32.arg2 = s.sizeLookupTable___298405;
     s.tmp_32.arg3 = s.tmp_26;
     s.tmp_32.arg4 = s.tmp_28;
     s.tmp_32.arg5 = s.tmp_30;
@@ -8939,12 +8939,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects___createShapePresetSpreadEffectData__P222016.info = {"start":3742,"length":1630,"line":134,"column":4,"endLine":177,"endColumn":5,"fileName":"blocks.ts","functionName":"__createShapePresetSpreadEffectData","argumentNames":["colorLookupTable","shape"]}
+extraEffects___createShapePresetSpreadEffectData__P298391.info = {"start":3742,"length":1630,"line":134,"column":4,"endLine":177,"endColumn":5,"fileName":"blocks.ts","functionName":"__createShapePresetSpreadEffectData","argumentNames":["colorLookupTable","shape"]}
 
-function extraEffects___createShapePresetSpreadEffectData__P222016_mk(s) {
+function extraEffects___createShapePresetSpreadEffectData__P298391_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects___createShapePresetSpreadEffectData__P222016, depth: s.depth + 1,
+        parent: s, fn: extraEffects___createShapePresetSpreadEffectData__P298391, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -8979,7 +8979,7 @@ function extraEffects___createShapePresetSpreadEffectData__P222016_mk(s) {
   tmp_30: undefined,
   tmp_31: undefined,
   tmp_32: undefined,
-  sizeLookupTable___222030: undefined,
+  sizeLookupTable___298405: undefined,
   arg0: undefined,
   arg1: undefined,
 } }
@@ -8988,7 +8988,7 @@ function extraEffects___createShapePresetSpreadEffectData__P222016_mk(s) {
 
 
 
-function SpreadEffectData_constructor__P222064(s) {
+function SpreadEffectData_constructor__P298439(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -9016,7 +9016,7 @@ switch (step) {
       s.lambdaArgs = null;
     }
     r0 = s.arg0;
-    if (!checkSubtype(r0, SpreadEffectData__C222045_VT)) failedCast(r0);
+    if (!checkSubtype(r0, SpreadEffectData__C298420_VT)) failedCast(r0);
     r0 = (s.arg0).fields["colorLookupTable"] = (s.arg1);
     r0 = (s.arg0).fields["sizeLookupTable"] = (s.arg2);
     r0 = (s.arg0).fields["spawnSpread"] = (s.arg3);
@@ -9036,9 +9036,9 @@ switch (step) {
     s.tmp_0 = r0;
     r0 = pxsim_numops_toBoolDecr(s.tmp_0);
     if (!r0) { step = 1; continue; }
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_2 = r0;
-    s.tmp_3 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_3 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_3.arg0 = s.tmp_2;
     s.tmp_3.arg1 = 100;
     s.tmp_3.arg2 = 100;
@@ -9052,12 +9052,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-SpreadEffectData_constructor__P222064.info = {"start":16358,"length":926,"line":427,"column":4,"endLine":449,"endColumn":5,"fileName":"blocks.ts","functionName":"inline","argumentNames":["this","colorLookupTable","sizeLookupTable","spawnSpread","lifespanSpread","lifespan","sizeScale","monoColor","extraVX","extraVY","extraVelocityMultiplierPercentage","gravity","sineShiftRadius","tweenOutAfterLifespanPastPercentage"]}
+SpreadEffectData_constructor__P298439.info = {"start":16367,"length":926,"line":427,"column":4,"endLine":449,"endColumn":5,"fileName":"blocks.ts","functionName":"inline","argumentNames":["this","colorLookupTable","sizeLookupTable","spawnSpread","lifespanSpread","lifespan","sizeScale","monoColor","extraVX","extraVY","extraVelocityMultiplierPercentage","gravity","sineShiftRadius","tweenOutAfterLifespanPastPercentage"]}
 
-function SpreadEffectData_constructor__P222064_mk(s) {
+function SpreadEffectData_constructor__P298439_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: SpreadEffectData_constructor__P222064, depth: s.depth + 1,
+        parent: s, fn: SpreadEffectData_constructor__P298439, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -9083,7 +9083,7 @@ function SpreadEffectData_constructor__P222064_mk(s) {
 
 
 
-function extraEffects_NumberRange_constructor__P221969(s) {
+function extraEffects_NumberRange_constructor__P298344(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -9100,7 +9100,7 @@ switch (step) {
       s.lambdaArgs = null;
     }
     r0 = s.arg0;
-    if (!checkSubtype(r0, extraEffects_NumberRange__C221966_VT)) failedCast(r0);
+    if (!checkSubtype(r0, extraEffects_NumberRange__C298341_VT)) failedCast(r0);
     r0 = (s.arg0).fields["min"] = (s.arg1);
     r0 = (s.arg0).fields["max"] = (s.arg2);
     r0 = (s.arg1 > s.arg2);
@@ -9115,12 +9115,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects_NumberRange_constructor__P221969.info = {"start":1081,"length":203,"line":49,"column":8,"endLine":57,"endColumn":9,"fileName":"blocks.ts","functionName":"inline","argumentNames":["this","min","max"]}
+extraEffects_NumberRange_constructor__P298344.info = {"start":1081,"length":203,"line":49,"column":8,"endLine":57,"endColumn":9,"fileName":"blocks.ts","functionName":"inline","argumentNames":["this","min","max"]}
 
-function extraEffects_NumberRange_constructor__P221969_mk(s) {
+function extraEffects_NumberRange_constructor__P298344_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects_NumberRange_constructor__P221969, depth: s.depth + 1,
+        parent: s, fn: extraEffects_NumberRange_constructor__P298344, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   arg0: undefined,
@@ -9132,7 +9132,7 @@ function extraEffects_NumberRange_constructor__P221969_mk(s) {
 
 
 
-function extraEffects_createCustomSpreadEffectData__P222319(s) {
+function extraEffects_createCustomSpreadEffectData__P298694(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -9157,7 +9157,7 @@ switch (step) {
       s.arg11 = (s.lambdaArgs[11]);
       s.lambdaArgs = null;
     }
-    r0 = pxsim_pxtcore_mkClassInstance(SpreadEffectData__C222045_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(SpreadEffectData__C298420_VT);
     s.tmp_0 = r0;
     r0 = pxsim_numops_toBoolDecr(s.arg8);
     s.tmp_4 = r0;
@@ -9172,9 +9172,9 @@ switch (step) {
     r0 = s.arg8;
     { step = 2; continue; }
   case 1:
-    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C221966_VT);
+    r0 = pxsim_pxtcore_mkClassInstance(extraEffects_NumberRange__C298341_VT);
     s.tmp_5 = r0;
-    s.tmp_6 = extraEffects_NumberRange_constructor__P221969_mk(s);
+    s.tmp_6 = extraEffects_NumberRange_constructor__P298344_mk(s);
     s.tmp_6.arg0 = s.tmp_5;
     s.tmp_6.arg1 = 100;
     s.tmp_6.arg2 = 100;
@@ -9206,7 +9206,7 @@ switch (step) {
   case 4:
     // jmp value (already in r0)
     s.tmp_13 = r0;
-    s.tmp_14 = SpreadEffectData_constructor__P222064_mk(s);
+    s.tmp_14 = SpreadEffectData_constructor__P298439_mk(s);
     s.tmp_14.arg0 = s.tmp_0;
     s.tmp_14.arg1 = s.arg0;
     s.tmp_14.arg2 = s.arg2;
@@ -9231,12 +9231,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-extraEffects_createCustomSpreadEffectData__P222319.info = {"start":12843,"length":1093,"line":319,"column":4,"endLine":352,"endColumn":5,"fileName":"blocks.ts","functionName":"createCustomSpreadEffectData","argumentNames":["colorLookupTable","monoColor","sizeLookupTable","spawnSpread","lifespanSpread","lifespan","vx","vy","velocityPercentageMultiplier","gravity","waveDiameter","tweenOutLifespanBreakpoint"]}
+extraEffects_createCustomSpreadEffectData__P298694.info = {"start":12852,"length":1093,"line":319,"column":4,"endLine":352,"endColumn":5,"fileName":"blocks.ts","functionName":"createCustomSpreadEffectData","argumentNames":["colorLookupTable","monoColor","sizeLookupTable","spawnSpread","lifespanSpread","lifespan","vx","vy","velocityPercentageMultiplier","gravity","waveDiameter","tweenOutLifespanBreakpoint"]}
 
-function extraEffects_createCustomSpreadEffectData__P222319_mk(s) {
+function extraEffects_createCustomSpreadEffectData__P298694_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: extraEffects_createCustomSpreadEffectData__P222319, depth: s.depth + 1,
+        parent: s, fn: extraEffects_createCustomSpreadEffectData__P298694, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -44711,7 +44711,7 @@ const Math_FastRandom__C74614_VT = mkVTable({
     "pickRandom": Math_FastRandom_pickRandom__P74619,
   },
 });
-const extraEffects_NumberRange__C221966_VT = mkVTable({
+const extraEffects_NumberRange__C298341_VT = mkVTable({
   name: "NumberRange",
   numFields: 2,
   classNo: 21,
@@ -44724,8 +44724,8 @@ const extraEffects_NumberRange__C221966_VT = mkVTable({
     "set/min": null,
     "max": null,
     "set/max": null,
-    "resizedMin": extraEffects_NumberRange_resizedMin__P221967,
-    "resizedMax": extraEffects_NumberRange_resizedMax__P221968,
+    "resizedMin": extraEffects_NumberRange_resizedMin__P298342,
+    "resizedMax": extraEffects_NumberRange_resizedMax__P298343,
   },
 });
 const particles_ParticleFactory__C74742_VT = mkVTable({
@@ -45238,7 +45238,7 @@ const scene_GameForeverHandler__C74375_VT = mkVTable({
     "set/handler": null,
   },
 });
-const SpreadEffectData__C222045_VT = mkVTable({
+const SpreadEffectData__C298420_VT = mkVTable({
   name: "SpreadEffectData",
   numFields: 13,
   classNo: 39,
@@ -46023,7 +46023,7 @@ const sprites_BaseSpriteSayRenderer__C73814_VT = mkVTable({
   },
 });
 
-const breakpoints = setupDebugger(1, ["fxTweenOutMultiplier___292903","fxOneHundred___292907","galois___292910","calibrationCenter___223148","calibrationEffect___223154","sfx___223146","cachedSin___292881","cachedCos___292882","cachedFourPixelCircle___292883","cachedSixPixelCircle___292884","sineShiftLUT___292887","sineShiftPhase___292886","PRESET_COLOR_LUT___221918","PRESET_SIZE_LUT___221960"])
+const breakpoints = setupDebugger(1, ["fxTweenOutMultiplier___292903","fxOneHundred___292907","galois___292910","calibrationCenter___223148","calibrationEffect___223154","sfx___223146","cachedSin___292881","cachedCos___292882","cachedFourPixelCircle___292883","cachedSixPixelCircle___292884","sineShiftLUT___292887","sineShiftPhase___292886","PRESET_COLOR_LUT___298293","PRESET_SIZE_LUT___298335"])
 
-return _main___P293850
+return _main___P299068
 })
