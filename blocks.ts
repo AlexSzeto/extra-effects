@@ -491,6 +491,13 @@ class SpreadEffectData {
     //% blockCombine block="max particle duration"
     get maxParticleLifespan(): number { return this.lifespan.max }
 
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="decelerate after duration"
+    set decelerateAfterDuration(value: number) { this.tweenOutAfterLifespanPastPercentage = Math.floor(value / this.lifespan.max * 100) }
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="decelerate after duration"
+    get decelerateAfterDuration(): number { return Math.floor(this.tweenOutAfterLifespanPastPercentage * this.lifespan.max / 100) }
+
     //% group="Advanced Data"
     //% block="set $this colors to $colorLookupTable"
     //% this.defl=myEffect
