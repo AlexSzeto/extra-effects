@@ -492,7 +492,6 @@ class SpreadEffectData {
     get maxParticleLifespan(): number { return this.lifespan.max }
 
     //% group="Advanced Data"
-    //% blockCombine
     //% block="set $this colors to $colorLookupTable"
     //% this.defl=myEffect
     //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
@@ -501,10 +500,8 @@ class SpreadEffectData {
     }
 
     //% group="Advanced Data"
-    //% blockCombine
     //% block="set $this sizes to $sizeLookupTable"
     //% this.defl=myEffect
-    //% sizeLookupTable.shadow="presetSizeTablePicker"
     public setSpreadEffectDataSizeLookupTable(sizeLookupTable: number[]): void {
         this.sizeLookupTable = sizeLookupTable
     }
