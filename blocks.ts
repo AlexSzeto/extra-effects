@@ -30,7 +30,6 @@ enum ExtraEffectPresetShape {
 //% color="#82047e" icon="\uf06d" block="Effects"
 //% groups="['Colors', 'Sizes', 'Data', 'Advanced Data', 'Create']"
 namespace extraEffects {
-
     const PRESET_COLOR_LUT = [
         [1, 5, 4, 2, 14, 14],
         [1, 1, 1, 9, 9, 6, 8],
@@ -41,7 +40,7 @@ namespace extraEffects {
     ]
 
     const PRESET_SIZE_LUT = [
-        [6, 6, 4, 2, 1],
+        [6, 6, 6, 4, 4, 2, 2, 1],
         [10, 16, 14, 12, 6, 4, 2, 1],
         [4, 16, 14, 12, 14, 16, 12, 8, 4],
         [1, 2, 4, 2, 2, 2, 1, 1, 1],
@@ -143,16 +142,18 @@ namespace extraEffects {
                 return new SpreadEffectData(
                     colorLookupTable,
                     sizeLookupTable,
-                    new NumberRange(0, 0),
-                    new NumberRange(0, 200),
+                    new NumberRange(0, 30),
+                    new NumberRange(20, 100),
                     new NumberRange(300, 400),
+                    0,
+                    true
                 )
             case ExtraEffectPresetShape.Explosion:
                 return new SpreadEffectData(
                     colorLookupTable,
                     sizeLookupTable,
-                    new NumberRange(0, 33),
-                    new NumberRange(66, 100),
+                    new NumberRange(0, 40),
+                    new NumberRange(50, 80),
                     new NumberRange(400, 600),
                     0.66
                 )
@@ -160,7 +161,7 @@ namespace extraEffects {
                 return new SpreadEffectData(
                     colorLookupTable,
                     sizeLookupTable,
-                    new NumberRange(0, 66),
+                    new NumberRange(0, 50),
                     new NumberRange(33, 33),
                     new NumberRange(800, 1200),
                     0.75
@@ -218,6 +219,7 @@ namespace extraEffects {
         createSpreadParticleSource(
             { x: x, y: y },
             effectData.colorLookupTable,
+            !effectData.monoColor,
             resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2 * effectData.sizeScale)),
             diameter >= 50 ? Math.floor(particlesPerSecond * circleArea(diameter) / circleArea(50)) : particlesPerSecond,
             lifespan,
@@ -264,6 +266,7 @@ namespace extraEffects {
         createSpreadParticleSource(
             sprite,
             effectData.colorLookupTable,
+            !effectData.monoColor,
             resizeTable(effectData.sizeLookupTable, Math.floor(diameter / 2 * effectData.sizeScale)),
             diameter >= 50 ? Math.floor(particlesPerSecond * circleArea(diameter) / circleArea(50)) : particlesPerSecond,
             lifespan,
@@ -286,6 +289,7 @@ namespace extraEffects {
     /**
      * Create a custom SpreadEffectData object from scratch. Read the description of each parameter or just play around with the settings to create a wide variety of unique effects.
      * @param colorLookupTable a lookup table of color index values used to color the particles over time
+     * @param monoColor define whether large particles should be one or two color
      * @param sizeLookupTable a lookup table of particle radius used to size the particles over time
      * @param spawnSpread range of random spawn distance away from center
      * @param lifespanSpread range of random distance traveled over the particle lifespan
@@ -299,8 +303,9 @@ namespace extraEffects {
      */
     //% group="Advanced Data" weight=100
     //% blockSetVariable=myEffect
-    //% block="custom effect set|colors to $colorLookupTable sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier gravity $gravity wave diameter $waveDiameter decelerate after duration $tweenOutLifespanBreakpoint"
+    //% block="custom effect set|colors to $colorLookupTable mono color $monoColor sizes to $sizeLookupTable initial spread $spawnSpread over time spread $lifespanSpread duration $lifespan|| add initial velocity|vx $vx vy $vy multiplied $velocityPercentageMultiplier gravity $gravity wave diameter $waveDiameter decelerate after duration $tweenOutLifespanBreakpoint"
     //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
+    //% monoColor.shadow="toggleYesNo" monoColor.defl=false
     //% sizeLookupTable.shadow="presetSizeTablePicker"
     //% spawnSpread.shadow="percentRangePicker"
     //% lifespanSpread.shadow="percentRangePicker"
@@ -314,6 +319,7 @@ namespace extraEffects {
     //% tweenOutLifespanBreakpoint.shadow="timePicker" tweenOutLifespanBreakpoint.defl=200
     export function createCustomSpreadEffectData(
         colorLookupTable: number[],
+        monoColor: boolean,
         sizeLookupTable: number[],
         spawnSpread: NumberRange,
         lifespanSpread: NumberRange,
@@ -332,6 +338,7 @@ namespace extraEffects {
             lifespanSpread,
             lifespan,
             0,
+            monoColor,
             vx,
             vy,
             !!velocityPercentageMultiplier
@@ -419,12 +426,13 @@ class SpreadEffectData {
     public sineShiftRadius: number
 
     constructor(
-        public colorLookupTable: number[],
+        public colorLookupTable: number[],        
         public sizeLookupTable: number[],
         public spawnSpread: extraEffects.NumberRange,
         public lifespanSpread: extraEffects.NumberRange,
         public lifespan: extraEffects.NumberRange,
         public sizeScale: number = 0,
+        public monoColor: boolean = false,
         extraVX: number = 0,
         extraVY: number = 0,
         public extraVelocityMultiplierPercentage: extraEffects.NumberRange = null,
@@ -484,6 +492,7 @@ class SpreadEffectData {
     get maxParticleLifespan(): number { return this.lifespan.max }
 
     //% group="Advanced Data"
+    //% blockCombine
     //% block="set $this colors to $colorLookupTable"
     //% this.defl=myEffect
     //% colorLookupTable.shadow="lists_create_with" colorLookupTable.defl="colorindexpicker"
@@ -492,11 +501,20 @@ class SpreadEffectData {
     }
 
     //% group="Advanced Data"
+    //% blockCombine
     //% block="set $this sizes to $sizeLookupTable"
     //% this.defl=myEffect
     //% sizeLookupTable.shadow="presetSizeTablePicker"
     public setSpreadEffectDataSizeLookupTable(sizeLookupTable: number[]): void {
         this.sizeLookupTable = sizeLookupTable
+    }
+
+    //% group="Advanced Data"
+    //% block="set $this mono color $monoColor"
+    //% this.defl=false
+    //% monoColor.shadow="toggleYesNo"
+    public setSpreadEffectDataMonoColor(monoColor: boolean): void {
+        this.monoColor = monoColor
     }
 
 }

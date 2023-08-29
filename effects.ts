@@ -10,6 +10,8 @@ namespace extraEffects {
     const NUM_SLICES = 90
     const MAX_LUT_SLICES = 20
     const MAX_TWEEN_SLICES = 20
+    const TWEEN_PCT_PER_SLICE = 1.0 / MAX_TWEEN_SLICES
+    const TWEEN_OUT_MULTIPLIER = 90
 
     const fxOneHundred = Fx8(100)
     const galois = new Math.FastRandom()
@@ -77,6 +79,7 @@ namespace extraEffects {
         /**
          * Creates a spread particle factory
          * @param colorLookupTable a lookup table of color index values used to color the particles over time
+         * @param duoColor define whether large particles should be one or two color
          * @param sizeLookupTable a lookup table of particle radius used to size the particles over time
          * @param minLifespan minimum randomized particle lifespan
          * @param maxLifespan maximum randomized particle lifespan
@@ -93,6 +96,7 @@ namespace extraEffects {
          */
         constructor(
             private colorLookupTable: number[],
+            private duoColor: boolean,
             private sizeLookupTable: number[],
             private minLifespan: number,
             private maxLifespan: number,
@@ -117,12 +121,26 @@ namespace extraEffects {
             this.sizeSlice = this.maxLifespan / this.sizeLookupTable.length
             this.tweenOutSlice = this.maxLifespan / MAX_TWEEN_SLICES
             this.spawnSpreadLookupTable = createNumberRangeLookupTable(minSpawnSpread, maxSpawnSpread)
-            this.lifespanSpreadLookupTable = createNumberRangeLookupTable(minLifespanSpread * 1000 / maxLifespan, maxLifespanSpread * 1000 / maxLifespan)
             this.extraVX = Fx8(extraVX)
             this.extraVY = Fx8(extraVY)
             this.sineShiftRadius = Fx8(sineShiftRadius)
             this.extraVelocityPercentageMultiplierLookupTable = createNumberRangeLookupTable(minExtraVelocityPercentageMultiplier, maxExtraVelocityPercentageMultiplier)
             this.tweenOutAfterLifespanPastPercentage = 100 - tweenOutAfterLifespanPastPercentage
+
+            // simulate the spread distance lost from tweening out, and recompensate by increasing initial velocity
+            if(this.tweenOutAfterLifespanPastPercentage > 0) {
+                let tweenOutSpreadAsPercentageOfNormalVelocity = Math.floor((100 - this.tweenOutAfterLifespanPastPercentage) / 100.0 * MAX_TWEEN_SLICES) * TWEEN_PCT_PER_SLICE
+                const tweenOutSlices = Math.ceil(this.tweenOutAfterLifespanPastPercentage / 100.00 * MAX_TWEEN_SLICES)
+                let percentagePerSlice = TWEEN_PCT_PER_SLICE
+                for(let tweenOut = 0; tweenOut < tweenOutSlices; tweenOut++) {
+                    percentagePerSlice *= TWEEN_OUT_MULTIPLIER / 100.0
+                    tweenOutSpreadAsPercentageOfNormalVelocity += percentagePerSlice
+                }
+                minLifespanSpread = Math.floor(minLifespanSpread / tweenOutSpreadAsPercentageOfNormalVelocity)
+                maxLifespanSpread = Math.floor(maxLifespanSpread / tweenOutSpreadAsPercentageOfNormalVelocity)
+            }
+
+            this.lifespanSpreadLookupTable = createNumberRangeLookupTable(minLifespanSpread * 1000 / maxLifespan, maxLifespanSpread * 1000 / maxLifespan)
         }
 
         createParticle(anchor: particles.ParticleAnchor) {
@@ -181,8 +199,12 @@ namespace extraEffects {
                     screen.fillCircle(Fx.toInt(x), Fx.toInt(y), Fx.toInt(radius), color)
                     break
                 default:
-                    screen.fillCircle(Fx.toInt(x), Fx.toInt(y), Fx.toInt(radius), darkerColor)
-                    screen.fillCircle(Fx.toInt(x), Fx.toInt(y), Fx.toInt(Fx.sub(radius, Fx.twoFx8)), color)
+                    if(this.duoColor) {
+                        screen.fillCircle(Fx.toInt(x), Fx.toInt(y), Fx.toInt(radius), darkerColor)
+                        screen.fillCircle(Fx.toInt(x), Fx.toInt(y), Fx.toInt(Fx.sub(radius, Fx.twoFx8)), color)
+                    } else {
+                        screen.fillCircle(Fx.toInt(x), Fx.toInt(y), Fx.toInt(radius), color)
+                    }
                     break
             }
 
@@ -190,8 +212,8 @@ namespace extraEffects {
 
             while (p.lifespan < p.data) {
                 p.data -= this.tweenOutSlice
-                p.vx = Fx.div(Fx.mul(p.vx, Fx8(90)), Fx8(100))
-                p.vy = Fx.div(Fx.mul(p.vy, Fx8(90)), Fx8(100))
+                p.vx = Fx.div(Fx.mul(p.vx, Fx8(TWEEN_OUT_MULTIPLIER)), Fx8(100))
+                p.vy = Fx.div(Fx.mul(p.vy, Fx8(TWEEN_OUT_MULTIPLIER)), Fx8(100))
             }
         }
     }
@@ -201,6 +223,7 @@ namespace extraEffects {
      * @param anchor anchor for the center point of all spawned particles
      * @param totalLifespan lifespan of all particles including the lifespan of the last particle spawned
      * @param colorLookupTable a lookup table of color index values used to color the particles over time
+     * @param duoColor define whether large particles should be one or two color
      * @param sizeLookupTable a lookup table of particle radius used to size the particles over time
      * @param particlesPerSecond number of particles to generate per second
      * @param minParticleLifespan minimum randomized particle lifespan
@@ -215,11 +238,12 @@ namespace extraEffects {
      * @param maxExtraVelocityPercentageMultiplier maximum randomized percentage multiplier for the added velocity
      * @param gravity y acceleration added to the velocity over time
      * @param tweenOutAfterLifespanPastPercentage lifespan percentage cutoff before the particle velocity tweens out
-     * @returns 
+     * @returns the newly created particle source
      */
     export function createSpreadParticleSource(
         anchor: particles.ParticleAnchor,
         colorLookupTable: number[],
+        duoColor: boolean,
         sizeLookupTable: number[],
         particlesPerSecond: number,
         totalLifespan: number,
@@ -239,6 +263,7 @@ namespace extraEffects {
     ): particles.ParticleSource {
         const factory = new SpreadParticleFactory(
             colorLookupTable,
+            duoColor,
             sizeLookupTable,
             minParticleLifespan,
             maxParticleLifespan,

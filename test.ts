@@ -3,7 +3,7 @@
 let sfx
 let calibrationCenter = sprites.create(image.create(1, 1), SpriteKind.Player)
 let calibrationEffect = extraEffects.createCustomSpreadEffectData(
-    [14], [1],
+    [14], true, [1],
     new extraEffects.NumberRange(100, 100), 
     new extraEffects.NumberRange(0, 0),
     new extraEffects.NumberRange(100, 100),
