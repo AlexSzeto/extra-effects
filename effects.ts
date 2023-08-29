@@ -281,6 +281,7 @@ namespace extraEffects {
         gravity: number = 0,
         sineShiftRadius: number = 0,
         tweenOutAfterLifespanPastPercentage: number = 50,
+        z: number = 0,
     ): particles.ParticleSource {
         const factory = new SpreadParticleFactory(
             colorLookupTable,
@@ -298,7 +299,6 @@ namespace extraEffects {
             maxExtraVelocityPercentageMultiplier,
             sineShiftRadius,
             tweenOutAfterLifespanPastPercentage,
-            
         );
 
         let sourceLifespan = totalLifespan
@@ -318,9 +318,8 @@ namespace extraEffects {
         if (sourceLifespan >= 0) {
             src.lifespan = sourceLifespan
         }
-        if (anchor instanceof Sprite) {
-            src.z = anchor.z
-        }
+
+        src.z = z        
         src.setAcceleration(0, gravity)
         return src
     }

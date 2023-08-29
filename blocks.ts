@@ -236,6 +236,7 @@ namespace extraEffects {
             effectData.gravity,
             effectData.sineShiftRadius,
             effectData.tweenOutAfterLifespanPastPercentage,
+            effectData.z,
         )
     }
 
@@ -283,6 +284,7 @@ namespace extraEffects {
             effectData.gravity,
             effectData.sineShiftRadius,
             effectData.tweenOutAfterLifespanPastPercentage,
+            effectData.z,
         )
     }
 
@@ -424,6 +426,9 @@ class SpreadEffectData {
     //% group="Advanced Data" blockSetVariable="myEffect"
     //% blockCombine block="wave radius"
     public sineShiftRadius: number
+    //% group="Advanced Data" blockSetVariable="myEffect"
+    //% blockCombine block="z (depth)"
+    public z: number
 
     constructor(
         public colorLookupTable: number[],        
@@ -444,6 +449,7 @@ class SpreadEffectData {
         this.extraVY = extraVY
         this.gravity = gravity
         this.sineShiftRadius = sineShiftRadius
+        this.z = 0
         if (!extraVelocityMultiplierPercentage) {
             this.extraVelocityMultiplierPercentage = new extraEffects.NumberRange(100, 100)
         }
